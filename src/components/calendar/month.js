@@ -2,11 +2,11 @@ import React from 'react';
 import Week from './week';
 import {Grid} from 'semantic-ui-react';
 
-const Month = ({month, numberOfDays, offset}) => {
+const Month = ({month, numberOfDays, offset, showDay}) => {
 
     const displayMonth = () => {
         const weekArray = ["1", "2", "3", "4", "5"];
-        return weekArray.map(week => <Week key={`${month}-${week}`} week={week} numberOfDays={numberOfDays} offset={offset}/>)
+        return weekArray.map(week => <Week key={`${month}-${week}`} week={week} numberOfDays={numberOfDays} offset={offset} showDay={showDay}/>)
     }
 
     const displayHeaders = () => {

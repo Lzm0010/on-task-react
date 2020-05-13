@@ -1,9 +1,18 @@
 import React from 'react';
 import Planner from '../components/planner';
+import {Sidebar, Segment} from 'semantic-ui-react';
 
-const PlannerContainer = () => {
+const PlannerContainer = ({visible, plannerDay}) => {
     return (
-        <Planner />
+        <Sidebar
+            as={Segment}
+            animation='scale down'
+            direction='left'
+            visible={visible}
+            style={{width: "50%"}}
+        >
+            <Planner plannerDay={plannerDay} />
+        </Sidebar>
     )
 }
 
