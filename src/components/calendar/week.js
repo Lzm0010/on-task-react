@@ -2,7 +2,7 @@ import React from 'react';
 import Day from './day';
 import {Grid} from 'semantic-ui-react';
 
-const Week = ({week, numberOfDays, offset}) => {
+const Week = ({week, numberOfDays, offset, showDay}) => {
 
     const displayWeek = () => {
         const dayArray = [1, 2, 3, 4, 5, 6, 7];
@@ -15,7 +15,7 @@ const Week = ({week, numberOfDays, offset}) => {
             }
         };
 
-        return dayArray.map(day => <Day key={`${week}-${day}`} day={getDay(week,day)}/>)
+        return dayArray.map(day => <Day key={`${week}-${day}`} day={getDay(week,day)} showDay={showDay}/>)
     }
    
     return (
