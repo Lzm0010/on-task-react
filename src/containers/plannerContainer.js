@@ -7,6 +7,7 @@ const PlannerContainer = ({visible, plannerDay}) => {
         <Sidebar
             as={Segment}
             animation='scale down'
+            data-value="sidebar"
             direction='left'
             visible={visible}
             style={{width: "50%"}}
