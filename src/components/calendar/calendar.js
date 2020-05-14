@@ -12,7 +12,7 @@ const Calendar = ({showDay}) => {
 
     const displayCalendar = () => {
         const currentMonth = monthArray[activePage - 1]
-        return <Month month={currentMonth.month} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay}/> 
+        return <Month month={currentMonth.month} monthId={activePage} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay}/> 
     }
 
     const handlePaginationChange = (e, pageInfo) => {
