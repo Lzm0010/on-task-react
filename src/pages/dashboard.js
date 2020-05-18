@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import CalendarContainer from '../containers/calendarContainer';
 import ProgressContainer from '../containers/progressContainer';
 import FriendsContainer from '../containers/friendsContainer';
@@ -9,15 +9,36 @@ const Dashboard = () => {
     const [visible, setVisible] = useState(false);
     const [dimmed, setDimmed] = useState(false);
     const [day, setDay] = useState(0);
-    const [note, setNote] = useState("");
+    const [notes, setNotes] = useState([]);
+    const [currentNote, setCurrentNote] = useState(null);
 
-    const getNote = (day) => {
-        // const noteId = find note by day passed in for now and user later
-        // const noteUrl = `http://localhost:3000/notes/${noteId}`/
-        // fetch(noteUrl, noteObj)
-        //     .then(res => res.json())
-        //     .then(note => setNote(note))
+    const getNotes = () => {
+        const notesUrl = `http://localhost:3000/notes`;
+        fetch(notesUrl)
+        .then(res => res.json())
+        .then(notes => setNotes(notes))
     }
+    
+    const getNote = (day) => {
+        console.log(notes);
+        let noteId = notes.find(note => note.date === day); //add user later
+        console.log("noteId:", noteId);
+        if (noteId){
+            noteId = noteId.id
+            const noteUrl = `http://localhost:3000/notes/${noteId}`;
+            fetch(noteUrl)
+                .then(res => res.json())
+                .then(note => setCurrentNote(note));
+        } else {
+            return null
+        }
+
+    } 
+
+    useEffect(() => {
+        getNotes()
+    }, [])
+
 
     const handlePlanner = (day) => {
         setVisible(true);
@@ -36,7 +57,7 @@ const Dashboard = () => {
     return (
         <Fragment>
             <Sidebar.Pushable as={Segment} onClick={clickOffPlanner}>
-                <PlannerContainer visible={visible} plannerDay={day}/>
+                <PlannerContainer visible={visible} plannerDay={day} note={currentNote} getNote={getNote} getNotes={getNotes}/>
                 <Sidebar.Pusher dimmed={dimmed && visible} >
                     <Segment basic>
                         <CalendarContainer showDay={handlePlanner}/>

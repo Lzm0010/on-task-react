@@ -1,25 +1,25 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Note from './note';
 
-const Planner = ({plannerDay}) => {
+const Planner = ({plannerDay, note, getNote, getNotes}) => {
     const notesUrl = "http://localhost:3000/notes" //get and post 
-    const [content, setContent] = useState("");
     
-    const newNote = () => {
+    const newNote = (content) => {
+        console.log(content);
         const noteObj = {
             'method': 'POST',
             'headers': {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }, 
-            'body': JSON.stringify({content, date:plannerDay})
+            'body': JSON.stringify({planner_id: 1, content, date:plannerDay})
         }
         fetch(notesUrl, noteObj)
         .then(res => res.json())
-        .then(note => setContent(note))
+        .then(note => console.log(note))
     }
     
-    const editNote = (noteId) => {
+    const editNote = (noteId, content) => {
         const noteUrl = `http://localhost:3000/notes/${noteId}`//edit and delete
         const noteObj = {
             'method': 'PATCH',
@@ -27,23 +27,26 @@ const Planner = ({plannerDay}) => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }, 
-            'body': JSON.stringify({content, date:plannerDay})
+            'body': JSON.stringify({planner_id: 1, content, date:plannerDay})
         }
         fetch(noteUrl, noteObj)
             .then(res => res.json())
-            .then(note => setContent(note))
+            .then(note => console.log(note))
     }
 
-    const handleChange = () => {
-        // if (note) {
-        //     editNote(noteId);
-        // } else {
-        //     newNote();
-        // }
+    const handleChange = (content) => {
+        if (note) {
+            console.log("Now i'm editing...")
+            editNote(note.id, content);
+        } else {
+            newNote(content);
+            getNotes();
+            getNote(plannerDay);
+        }
     }
 
     return (
-        <Note handleChange={handleChange} plannerDay={plannerDay}/>
+        <Note note={note} handleChange={handleChange} plannerDay={plannerDay}/>
     )
 }
 
