@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Form, TextArea } from 'semantic-ui-react';
 
 const Note = ({plannerDay, handleChange, note}) => {
-    const initialContent = note ? note.content : "";
-    const [content, setContent] = useState(initialContent);
+    const [content, setContent] = useState("");
+
+    useEffect(() => {
+        note !== null ? setContent(note.content) : setContent("");
+    }, [note])
 
     const handleNote = (event) => {
-        setContent(event.target.value);
+        const content = event.target.value;
+        setContent(content);
         handleChange(content);
     }
 

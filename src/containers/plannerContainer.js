@@ -2,7 +2,7 @@ import React from 'react';
 import Planner from '../components/planner';
 import {Sidebar, Segment} from 'semantic-ui-react';
 
-const PlannerContainer = ({visible, plannerDay, note, getNote, getNotes}) => {
+const PlannerContainer = ({visible, plannerDay, note, getNote, addNote, setCurrentNote}) => {
     return (
         <Sidebar
             as={Segment}
@@ -12,7 +12,7 @@ const PlannerContainer = ({visible, plannerDay, note, getNote, getNotes}) => {
             visible={visible}
             style={{width: "50%"}}
         >
-            <Planner plannerDay={plannerDay} note={note} getNote={getNote} getNotes={getNotes}/>
+            <Planner plannerDay={plannerDay} note={note} getNote={getNote} addNote={addNote} setCurrentNote={setCurrentNote}/>
         </Sidebar>
     )
 }
