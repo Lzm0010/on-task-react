@@ -1,7 +1,7 @@
 import React from 'react';
 import Note from './note';
 
-const Planner = ({plannerDay, note, getNote, getNotes}) => {
+const Planner = ({plannerDay, note, getNote, addNote, setCurrentNote}) => {
     const notesUrl = "http://localhost:3000/notes" //get and post 
     
     const newNote = (content) => {
@@ -16,7 +16,10 @@ const Planner = ({plannerDay, note, getNote, getNotes}) => {
         }
         fetch(notesUrl, noteObj)
         .then(res => res.json())
-        .then(note => console.log(note))
+        .then(note => {
+            addNote(note)
+            setCurrentNote(note)
+        })
     }
     
     const editNote = (noteId, content) => {
@@ -39,9 +42,8 @@ const Planner = ({plannerDay, note, getNote, getNotes}) => {
             console.log("Now i'm editing...")
             editNote(note.id, content);
         } else {
+            console.log("I'm a new note!")
             newNote(content);
-            getNotes();
-            getNote(plannerDay);
         }
     }
 
