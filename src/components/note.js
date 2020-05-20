@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { Form, TextArea } from 'semantic-ui-react';
+import { Form, TextArea, Segment } from 'semantic-ui-react';
 
-const Note = ({plannerDay, handleChange, note}) => {
+const Note = ({handleChange, note}) => {
     const [content, setContent] = useState("");
 
     useEffect(() => {
@@ -15,9 +15,11 @@ const Note = ({plannerDay, handleChange, note}) => {
     }
 
     return (
-        <Form>
-            <TextArea onChange={handleNote} value={content} placeholder={plannerDay} style={{minHeight: 500}} data-value="sidebar"/>
-        </Form>
+        <Segment raised>
+            <Form>
+                <TextArea onChange={handleNote} value={content} placeholder="Notes..." style={{minHeight: 300}} data-value="sidebar"/>
+            </Form>
+        </Segment>
     )
 }
 
