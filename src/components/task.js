@@ -1,8 +1,9 @@
 import React from 'react';
+import {Checkbox} from 'semantic-ui-react';
 
 const Task = () => {
     return (
-        <div>Task</div>
+        <Checkbox label={<label>Task</label>}/>
     )
 }
 
