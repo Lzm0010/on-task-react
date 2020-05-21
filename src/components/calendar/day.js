@@ -1,17 +1,28 @@
 import React from 'react';
-import {Card, Grid} from 'semantic-ui-react'
+import CalTask from './calTask';
+import {Card, Grid, Feed} from 'semantic-ui-react'
 
-const Day = ({day, displayDay, showDay}) => {
+
+const Day = ({day, displayDay, showDay, dailyTasks}) => {
 
     const handleClick = () => {
         showDay(day)
     };
 
+    const displayTasks = () => {
+        return dailyTasks.map(task => <CalTask task={task}/>)
+    }
+
     return (
         <Grid.Column width={2}>
             <Card onClick={handleClick}>
                 <Card.Content>
-                    {displayDay}
+                    <Card.Header>
+                        {displayDay}
+                    </Card.Header>
+                    <Feed>
+                        {displayTasks()}
+                    </Feed>
                 </Card.Content>
             </Card>
         </Grid.Column>

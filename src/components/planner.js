@@ -3,11 +3,10 @@ import Note from './note';
 import TasksContainer from '../containers/tasksContainer';
 import {Divider, Icon, Header} from 'semantic-ui-react';
 
-const Planner = ({plannerDay, note, addNote, setCurrentNote, tasks}) => {
+const Planner = ({plannerDay, note, addNote, setCurrentNote, tasks, addTask, removeTask, updateTask}) => {
     const notesUrl = "http://localhost:3000/notes" //get and post 
     
     const newNote = (content) => {
-        console.log(content);
         const noteObj = {
             'method': 'POST',
             'headers': {
@@ -35,8 +34,8 @@ const Planner = ({plannerDay, note, addNote, setCurrentNote, tasks}) => {
             'body': JSON.stringify({planner_id: 1, content, date:plannerDay})
         }
         fetch(noteUrl, noteObj)
-            .then(res => res.json())
-            .then(note => console.log(note))
+        .then(res => res.json())
+        .then(note => console.log(note))
     }
 
     const handleChange = (content) => {
@@ -57,7 +56,7 @@ const Planner = ({plannerDay, note, addNote, setCurrentNote, tasks}) => {
                     Tasks
                 </Header>
             </Divider>
-            <TasksContainer tasks={tasks}/>
+            <TasksContainer tasks={tasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} plannerDay={plannerDay}/>
             <Divider horizontal>
                 <Header as='h4'>
                     <Icon name="pencil"/>

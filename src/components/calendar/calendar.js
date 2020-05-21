@@ -3,7 +3,7 @@ import Month from './month';
 import monthArray from '../../data/calendarData';
 import {Container, Pagination, Segment} from 'semantic-ui-react';
 
-const Calendar = ({showDay}) => {
+const Calendar = ({showDay, tasks}) => {
     const [activePage, setActivePage] = useState(1)
 
     // const createCalendar = () => {
@@ -12,7 +12,7 @@ const Calendar = ({showDay}) => {
 
     const displayCalendar = () => {
         const currentMonth = monthArray[activePage - 1]
-        return <Month month={currentMonth.month} monthId={activePage} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay}/> 
+        return <Month month={currentMonth.month} monthId={activePage} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay} tasks={tasks}/> 
     }
 
     const handlePaginationChange = (e, pageInfo) => {

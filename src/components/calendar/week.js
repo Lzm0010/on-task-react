@@ -2,7 +2,7 @@ import React from 'react';
 import Day from './day';
 import {Grid} from 'semantic-ui-react';
 
-const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
+const Week = ({monthId, week, numberOfDays, offset, showDay, tasks}) => {
 
     const displayWeek = () => {
         const dayArray = [1, 2, 3, 4, 5, 6, 7];
@@ -23,11 +23,19 @@ const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
                 return `2020${month}${zeroPaddedDay}`;
             } else {
                 return null;
-            }
-                
+            }  
+        };
+
+        const dailyTasks = (day) => {
+            const railsDay = formattedDay(day)
+            const dayTasks = tasks.filter(task => {
+                const taskDate = task.date.slice(0,10).replace(/-/g, "");
+                return taskDate === railsDay
+            })
+            return dayTasks
         }
 
-        return dayArray.map(day => <Day key={`${week}-${day}`} day={formattedDay(day)} displayDay={rawDay(day)} showDay={showDay}/>)
+        return dayArray.map(day => <Day key={`${week}-${day}`} day={formattedDay(day)} displayDay={rawDay(day)} showDay={showDay} dailyTasks={dailyTasks(day)}/>)
     }
    
     return (
