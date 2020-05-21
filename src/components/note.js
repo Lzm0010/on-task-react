@@ -17,7 +17,7 @@ const Note = ({handleChange, note}) => {
     return (
         <Segment raised>
             <Form>
-                <TextArea onChange={handleNote} value={content} placeholder="Notes..." style={{minHeight: 300}} data-value="sidebar"/>
+                <TextArea onChange={handleNote} value={content} placeholder="Notes..." style={{minHeight: 300}}/>
             </Form>
         </Segment>
     )

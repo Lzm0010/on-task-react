@@ -3,15 +3,15 @@ import Task from '../components/task';
 import TaskButton from '../components/taskButton';
 import {List} from 'semantic-ui-react';
 
-const TasksContainer = ({tasks}) => {
+const TasksContainer = ({tasks, addTask, plannerDay, removeTask, updateTask}) => {
 
     const displayTasks = () => (
-        tasks.map(task => <List.Item><Task key={task.id} task={task}/></List.Item>)
+        tasks.map(task => <List.Item key={task.id}><Task task={task} removeTask={removeTask} updateTask={updateTask}/></List.Item>)
     )
 
     return (
         <Fragment>
-            <TaskButton />
+            <TaskButton addTask={addTask} plannerDay={plannerDay}/>
             <List divided relaxed>
                 {displayTasks()} 
             </List>
