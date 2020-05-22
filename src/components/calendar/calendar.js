@@ -4,11 +4,9 @@ import monthArray from '../../data/calendarData';
 import {Container, Pagination, Segment} from 'semantic-ui-react';
 
 const Calendar = ({showDay, tasks}) => {
-    const [activePage, setActivePage] = useState(1)
-
-    // const createCalendar = () => {
-    //     return monthArray.map(month => <Month key={month.month} month={month.month} numberOfDays={month.numberOfDays} offset={month.offset}/>)
-    // }
+    const [today] = useState(new Date());
+    const getCurrentMonth = () => (String(today.getMonth() + 1))
+    const [activePage, setActivePage] = useState(getCurrentMonth())
 
     const displayCalendar = () => {
         const currentMonth = monthArray[activePage - 1]
