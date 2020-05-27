@@ -74,8 +74,6 @@ const Dashboard = () => {
     const updateTask = (task) => {
         const updatedTasks = [...tasks];
         const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id)
-        console.log("Updated Tasks: ", updatedTasks);
-        console.log("index:", index);
         updatedTasks[index] = task;
         setTasks(updatedTasks);
     }
