@@ -6,7 +6,7 @@ const Task = ({task, updateTask, removeTask}) => {
     const [checked, setChecked] = useState(task.is_completed);
     const [editing, setEditing] = useState(task.name ? false : true);
 
-    const editTask = (name) => {
+    const editTask = (name, is_completed) => {
         const taskUrl = `http://localhost:3000/tasks/${task.id}`
         const taskObj = {
             'method': 'PATCH',
@@ -14,7 +14,7 @@ const Task = ({task, updateTask, removeTask}) => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }, 
-            'body': JSON.stringify({name})
+            'body': JSON.stringify({name, is_completed})
         }
         fetch(taskUrl, taskObj)
         .then(res => res.json())
@@ -39,7 +39,9 @@ const Task = ({task, updateTask, removeTask}) => {
     }
 
     const toggleCheck = () => {
-        setChecked(!checked);
+        const value = !checked;
+        setChecked(value);
+        editTask(name, value);
     }
 
     const toggleEditing = () => {
@@ -52,7 +54,7 @@ const Task = ({task, updateTask, removeTask}) => {
     }
 
     const handleEdit = () => {
-        editTask(name);
+        editTask(name, false);
         toggleEditing();
     }
 

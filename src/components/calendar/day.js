@@ -10,7 +10,7 @@ const Day = ({day, displayDay, showDay, dailyTasks}) => {
     };
 
     const displayTasks = () => {
-        return dailyTasks.map(task => <CalTask task={task}/>)
+        return dailyTasks.map(task => <CalTask key={`ct-${task.id}`} task={task}/>)
     }
 
     return (
