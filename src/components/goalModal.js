@@ -55,7 +55,8 @@ const GoalModal = ({modalOpen, handleClose}) => {
         })
     }
     
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         newGoal();
         handleClose();
         resetName();
@@ -81,14 +82,16 @@ const GoalModal = ({modalOpen, handleClose}) => {
                         <Form.Field
                             control={Input}
                             label="Goal" 
-                            placeholder="Enter the goal you want to achieve..." 
+                            placeholder="Enter the goal you want to achieve..."
+                            required 
                             {...bindName}
                         />
 
                         <Form.Field 
                             control={Select}
                             label="Goal Type"
-                            placeholder="This is the type of goal that will be displayed on the calendar!" 
+                            placeholder="This is the type of goal that will be displayed on the calendar!"
+                            required
                             options={typeOptions} 
                             {...bindGoalType}
                         />
@@ -97,7 +100,7 @@ const GoalModal = ({modalOpen, handleClose}) => {
 
                     <Form.Group widths='equal'>
 
-                        <Form.Field>
+                        <Form.Field required>
                             <label>Start Date</label>
                             <DatePicker 
                                 selected={startDate}
@@ -108,7 +111,7 @@ const GoalModal = ({modalOpen, handleClose}) => {
                             />
                         </Form.Field>
 
-                        <Form.Field>
+                        <Form.Field required>
                             <label>End Date</label>
                             <DatePicker 
                                 selected={endDate}
@@ -125,13 +128,14 @@ const GoalModal = ({modalOpen, handleClose}) => {
 
                     <Form.Group widths="equal">
 
-                        {(goalType === "total" ? <Form.Input fluid label="Total" placeholder="Total number of days you want to complete the goal.." {...bindGoalTotalDays} /> : null)}
-                        {(goalType === "percentage" ? <Form.Input fluid label="Percentage" placeholder="Percentage of days to complete over this time span.." {...bindGoalPercentage} /> : null)}
+                        {(goalType === "total" ? <Form.Input required label="Total" placeholder="Total number of days you want to complete the goal.." {...bindGoalTotalDays} /> : null)}
+                        {(goalType === "percentage" ? <Form.Input required label="Percentage" placeholder="Percentage of days to complete over this time span.." {...bindGoalPercentage} /> : null)}
                         <Form.Field
                             control={Select}
                             label="Frequency"
                             placeholder="Select how often you want to accomplish this goal.." 
-                            options={freqOptions} 
+                            options={freqOptions}
+                            required 
                             {...bindFrequency}
                         />
 

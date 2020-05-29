@@ -30,7 +30,7 @@ const Calendar = ({showDay, tasks}) => {
     }
 
     return (
-        <Container style={{width: "80%"}}>
+        <Container style={{width: "90%"}}>
             <Segment textAlign="right">
                 <GoalButton handleClick={handleModalOpen} />
                 <ProjectButton />

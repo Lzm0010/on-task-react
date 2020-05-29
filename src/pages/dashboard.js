@@ -1,18 +1,16 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {Fragment, useState} from 'react';
 import CalendarContainer from '../containers/calendarContainer';
 import ProgressContainer from '../containers/progressContainer';
 import FriendsContainer from '../containers/friendsContainer';
 import PlannerContainer from '../containers/plannerContainer';
-import {Sidebar, Segment} from 'semantic-ui-react';
+import {Sidebar, Segment, Grid} from 'semantic-ui-react';
 
-const Dashboard = () => {
+const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects, setProjects}) => {
     //============== STATE VARIABLES ===================//
     const [visible, setVisible] = useState(false);
     const [dimmed, setDimmed] = useState(false);
     const [day, setDay] = useState(0);
-    const [notes, setNotes] = useState([]);
     const [currentNote, setCurrentNote] = useState(null);
-    const [tasks, setTasks] = useState([]);
     const [dayTasks, setDayTasks] = useState([]);
 
     //============== NOTE FUNCTIONS ===================//
@@ -20,13 +18,6 @@ const Dashboard = () => {
         setNotes(notes => [...notes, note])
     }
 
-    const getNotes = () => {
-        const notesUrl = `http://localhost:3000/notes`;
-        fetch(notesUrl)
-        .then(res => res.json())
-        .then(notes => setNotes(notes))
-    }
-    
     const getNote = (day) => {
         let noteId = notes.find(note => {
             const noteDate = note.date.slice(0,10).replace(/-/g, "");
@@ -45,17 +36,9 @@ const Dashboard = () => {
     } 
 
     //============== TASK FUNCTIONS ===================//
-
     const addTask = (task) => {
         setTasks(tasks => [...tasks, task])
         setDayTasks(tasks => [...tasks, task])
-    }
-
-    const getTasks = () => {
-        const tasksUrl = `http://localhost:3000/tasks`;
-        fetch(tasksUrl)
-            .then(res => res.json())
-            .then(tasks => setTasks(tasks))
     }
 
     const getTasksByDay = (day) => {
@@ -78,17 +61,7 @@ const Dashboard = () => {
         setTasks(updatedTasks);
     }
 
-
-    //============== USE EFFECT HOOK ===================//
-
-    useEffect(() => {
-        getNotes()
-        getTasks()
-    }, [])
-
-    
     //============== EVENT FUNCTIONS (PLANNER) ===================//
-
     const handlePlanner = (day) => {
         setVisible(true);
         setDimmed(true);
@@ -113,11 +86,23 @@ const Dashboard = () => {
             <Sidebar.Pushable as={Segment} onClick={clickOffPlanner}>
                 <PlannerContainer visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} tasks={dayTasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} />
                 <Sidebar.Pusher dimmed={dimmed && visible}>
-                    <Segment basic>
-                        <CalendarContainer showDay={handlePlanner} tasks={tasks}/>
-                        <ProgressContainer/>
-                        <FriendsContainer />
-                    </Segment>
+                    <Grid columns={2}>
+                        <Grid.Row stretched>
+
+                            <Grid.Column width={12}>
+                                <Segment basic>
+                                    <CalendarContainer showDay={handlePlanner} tasks={tasks}/>
+                                </Segment>
+                            </Grid.Column>
+
+                            <Grid.Column width={4}>
+                                <Segment>
+                                    <ProgressContainer goals={goals} projects={projects}/>
+                                </Segment>
+                            </Grid.Column>
+
+                        </Grid.Row>
+                    </Grid>
                 </Sidebar.Pusher>
             </Sidebar.Pushable>
         </Fragment>

@@ -7,8 +7,6 @@ const CalendarContainer = ({showDay, tasks}) => {
     return (
         <Fragment>
             <Calendar showDay={showDay} tasks={tasks} />
-            <GoalContainer/>
-            <ProjectContainer />
         </Fragment>
     )
 }

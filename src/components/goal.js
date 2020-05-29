@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
-const Goal = () => {
+const Goal = ({goal}) => {
+
     return (
-        <div>Goal</div>
+        <Fragment>
+            {console.log(goal)}
+            {goal !== undefined ? (
+                <div>{goal.name}</div>
+            ) : null}
+        </Fragment>
     )
 }
 
