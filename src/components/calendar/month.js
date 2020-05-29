@@ -5,7 +5,7 @@ import {Grid} from 'semantic-ui-react';
 const Month = ({monthId, month, numberOfDays, offset, showDay, tasks}) => {
 
     const displayMonth = () => {
-        const weekArray = ["1", "2", "3", "4", "5"];
+        const weekArray = ["1", "2", "3", "4", "5", "6"];
         return weekArray.map(week => <Week key={`${monthId}-${week}`} monthId={monthId} week={week} numberOfDays={numberOfDays} offset={offset} showDay={showDay} tasks={tasks}/>)
     }
 
