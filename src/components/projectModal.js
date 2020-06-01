@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import {useInput} from '../hooks/useInput';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
+import ProjectTasksContainer from '../containers/projectTasksContainer';
 
 
 const ProjectModal = ({modalOpen, handleClose}) => {
     const {value:name, bind:bindName, reset:resetName} = useInput("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
+    const [projectTasks, setProjectTasks] = useState([1]);
 
     const newProject = () => {
         const projectUrl = `http://localhost:3000/projects`;
@@ -88,6 +90,8 @@ const ProjectModal = ({modalOpen, handleClose}) => {
                         </Form.Field>
 
                     </Form.Group>
+    
+                    <ProjectTasksContainer projectTasks={projectTasks} setProjectTasks={setProjectTasks}/>
 
                     <Divider hidden/>
 

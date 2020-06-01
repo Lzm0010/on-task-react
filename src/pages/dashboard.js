@@ -13,6 +13,11 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     const [currentNote, setCurrentNote] = useState(null);
     const [dayTasks, setDayTasks] = useState([]);
 
+    //============== GOAL FUNCTIONS ===================//
+    const addGoal = () => {
+        
+    }
+
     //============== NOTE FUNCTIONS ===================//
     const addNote = (note) => {
         setNotes(notes => [...notes, note])
