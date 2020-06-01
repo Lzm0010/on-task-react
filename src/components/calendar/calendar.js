@@ -5,12 +5,14 @@ import {Container, Pagination, Segment} from 'semantic-ui-react';
 import GoalButton from '../goalButton';
 import ProjectButton from '../projectButton';
 import GoalModal from '../goalModal';
+import ProjectModal from '../projectModal';
 
 const Calendar = ({showDay, tasks}) => {
     const [today] = useState(new Date());
     const getCurrentMonth = () => (String(today.getMonth() + 1));
     const [activePage, setActivePage] = useState(getCurrentMonth());
-    const [modalOpen, setModalOpen] = useState(false);
+    const [goalModalOpen, setGoalModalOpen] = useState(false);
+    const [projModalOpen, setProjModalOpen] = useState(false);
 
     const displayCalendar = () => {
         const currentMonth = monthArray[activePage - 1];
@@ -21,19 +23,27 @@ const Calendar = ({showDay, tasks}) => {
         setActivePage(pageInfo.activePage)
     }
 
-    const handleModalOpen = () => {
-        setModalOpen(true);
+    const handleGoalModalOpen = () => {
+        setGoalModalOpen(true);
     }
 
-    const handleModalClose = () => {
-        setModalOpen(false)
+    const handleGoalModalClose = () => {
+        setGoalModalOpen(false);
+    }
+
+    const handleProjModalOpen = () => {
+        setProjModalOpen(true);
+    }
+
+    const handleProjModalClose = () => {
+        setProjModalOpen(false);
     }
 
     return (
         <Container style={{width: "90%"}}>
             <Segment textAlign="right">
-                <GoalButton handleClick={handleModalOpen} />
-                <ProjectButton />
+                <GoalButton handleClick={handleGoalModalOpen} />
+                <ProjectButton handleClick={handleProjModalOpen}/>
             </Segment>
             {displayCalendar()}
             <Segment style={{textAlign: "center"}}>
@@ -44,7 +54,8 @@ const Calendar = ({showDay, tasks}) => {
                     ellipsisItem={null}
                 />
             </Segment>
-            <GoalModal handleClose={handleModalClose} modalOpen={modalOpen}/>
+            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen}/>
+            <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} />
         </Container>
     )
 }
