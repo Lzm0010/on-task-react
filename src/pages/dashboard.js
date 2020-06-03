@@ -18,6 +18,10 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
         setGoals(goals => [...goals, goal])
     }
 
+    const removeGoal = (goal) => {
+        setGoals(goals => goals.filter(dGoal => dGoal.id !== goal.id))
+    }
+
     //============== NOTE FUNCTIONS ===================//
     const addNote = (note) => {
         setNotes(notes => [...notes, note])
@@ -43,6 +47,17 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     //============== PROJECT FUNCTIONS ===================//
     const addProject = (project) => {
         setProjects(projects => [...projects, project])
+    }
+
+    // const updateProject = (project) => {
+    //     const updatedProjects = [...projects];
+    //     const index = updatedProjects.findIndex(projectToUpdate => projectToUpdate.id === project.id)
+    //     updatedProjects[index] = project;
+    //     setProjects(updatedProjects);
+    // }
+
+    const removeProject = (proj) => {
+        setProjects(projs => projs.filter(dProj => dProj.id !== proj.id))
     }
 
     //============== TASK FUNCTIONS ===================//
@@ -107,7 +122,7 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
 
                             <Grid.Column width={4}>
                                 <Segment>
-                                    <ProgressContainer goals={goals} projects={projects}/>
+                                    <ProgressContainer goals={goals} projects={projects} removeGoal={removeGoal} removeProject={removeProject} removeTask={removeTask}/>
                                 </Segment>
                             </Grid.Column>
 

@@ -1,8 +1,51 @@
 import React from 'react';
+import {Card, List} from 'semantic-ui-react';
 
-const Project = ({project}) => {
+const Project = ({project, removeProject, removeTask}) => {
+
+    const deleteProject = () => {
+        project.tasks.forEach(task => {
+            removeTask(task)
+        });
+    
+        const projectUrl = `http://localhost:3000/projects/${project.id}`
+        const projectObj = {
+            'method': 'DELETE',
+            'headers': {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }
+        fetch(projectUrl, projectObj)
+        .then(res => res.json())
+        .then(project => removeProject(project))
+    }
+
+    const handleDelete = () => {
+        deleteProject()
+    }
+
+    const handleEdit = () => {
+        console.log(project)
+    }
+
     return (
-        <div>{project.name}</div>
+        <Card>
+            <Card.Content>
+                <Card.Header>
+                    {project.name}
+                </Card.Header>
+                <Card.Description>
+                    Progress Filler
+                </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+                <List celled horizontal size="mini" floated="right">
+                    <List.Item as="a" onClick={handleEdit}>Edit</List.Item>
+                    <List.Item as="a" onClick={handleDelete}>Delete</List.Item>
+                </List>
+            </Card.Content>
+        </Card>
     )
 }
 
