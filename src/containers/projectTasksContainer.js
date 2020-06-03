@@ -6,7 +6,7 @@ const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {
     
     const addProjectTask = (e) => {
         e.preventDefault();
-        setProjectTasks(tasks => [...projectTasks, {name:null, step_number: projectTasks.length+1, planner_id: 1, status: "active", is_completed: false, date: null}]);
+        setProjectTasks(tasks => [...projectTasks, {name:null, step_number: projectTasks.length+1, status: "active", is_completed: false, date: null}]);
     }
 
     const updateProjectTask = (task) => {

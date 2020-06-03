@@ -7,7 +7,7 @@ import ProjectButton from '../projectButton';
 import GoalModal from '../goalModal';
 import ProjectModal from '../projectModal';
 
-const Calendar = ({showDay, tasks}) => {
+const Calendar = ({showDay, tasks, addTask, addProject, addGoal}) => {
     const [today] = useState(new Date());
     const getCurrentMonth = () => (String(today.getMonth() + 1));
     const [activePage, setActivePage] = useState(getCurrentMonth());
@@ -54,8 +54,8 @@ const Calendar = ({showDay, tasks}) => {
                     ellipsisItem={null}
                 />
             </Segment>
-            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen}/>
-            <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} />
+            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
+            <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject}/>
         </Container>
     )
 }

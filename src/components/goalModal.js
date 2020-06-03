@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
 
 
-const GoalModal = ({modalOpen, handleClose}) => {
+const GoalModal = ({modalOpen, handleClose, addGoal}) => {
     const {value:name, bind:bindName, reset:resetName} = useInput("");
     const {value:goalType, bind:bindGoalType, reset:resetGoalType} = useSelect("");
     const [startDate, setStartDate] = useState(new Date());
@@ -50,8 +50,8 @@ const GoalModal = ({modalOpen, handleClose}) => {
         fetch(goalUrl, goalObj)
         .then(res => res.json())
         .then(goal => {
+            addGoal(goal);
             // addTask(task)
-            console.log(goal);
         })
     }
     

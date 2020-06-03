@@ -14,8 +14,8 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     const [dayTasks, setDayTasks] = useState([]);
 
     //============== GOAL FUNCTIONS ===================//
-    const addGoal = () => {
-        
+    const addGoal = (goal) => {
+        setGoals(goals => [...goals, goal])
     }
 
     //============== NOTE FUNCTIONS ===================//
@@ -38,7 +38,12 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
         } else {
             setCurrentNote(null);
         }
-    } 
+    }
+
+    //============== PROJECT FUNCTIONS ===================//
+    const addProject = (project) => {
+        setProjects(projects => [...projects, project])
+    }
 
     //============== TASK FUNCTIONS ===================//
     const addTask = (task) => {
@@ -96,7 +101,7 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
 
                             <Grid.Column width={12}>
                                 <Segment basic>
-                                    <CalendarContainer showDay={handlePlanner} tasks={tasks}/>
+                                    <CalendarContainer showDay={handlePlanner} tasks={tasks} addTask={addTask} addProject={addProject} addGoal={addGoal}/>
                                 </Segment>
                             </Grid.Column>
 
