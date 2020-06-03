@@ -13,7 +13,6 @@ const ProgressContainer = ({goals, projects}) => {
         projects.map(project => <Project key={`p-${project.id}`} project={project} />)
     )
 
-
     return (
         <Fragment>
             <Divider horizontal>
