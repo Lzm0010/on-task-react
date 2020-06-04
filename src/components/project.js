@@ -1,7 +1,8 @@
-import React from 'react';
-import {Card, List} from 'semantic-ui-react';
+import React, {useState} from 'react';
+import {Card, List, Confirm} from 'semantic-ui-react';
 
 const Project = ({project, removeProject, removeTask}) => {
+    const [open, setOpen] = useState(false);
 
     const deleteProject = () => {
         project.tasks.forEach(task => {
@@ -21,12 +22,18 @@ const Project = ({project, removeProject, removeTask}) => {
         .then(project => removeProject(project))
     }
 
+    const handleCancel = () => {
+        setOpen(false);
+    }
+    const handleConfirm = () => {
+        deleteProject();
+    }
     const handleDelete = () => {
-        deleteProject()
+        setOpen(true);
     }
 
     const handleEdit = () => {
-        console.log(project)
+
     }
 
     return (
@@ -44,6 +51,14 @@ const Project = ({project, removeProject, removeTask}) => {
                     <List.Item as="a" onClick={handleEdit}>Edit</List.Item>
                     <List.Item as="a" onClick={handleDelete}>Delete</List.Item>
                 </List>
+                <Confirm
+                    open={open}
+                    onCancel={handleCancel}
+                    onConfirm={handleConfirm}
+                    cancelButton='Never mind'
+                    confirmButton="Let's do it" 
+                    size='mini'
+                />
             </Card.Content>
         </Card>
     )

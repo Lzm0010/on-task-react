@@ -1,7 +1,8 @@
-import React from 'react';
-import {Card, List} from 'semantic-ui-react';
+import React, {useState} from 'react';
+import {Card, List, Confirm} from 'semantic-ui-react';
 
 const Goal = ({goal, removeGoal, removeTask}) => {
+    const [open, setOpen] = useState(false);
 
     const deleteGoal = () => {
         goal.tasks.forEach(task => {
@@ -21,9 +22,14 @@ const Goal = ({goal, removeGoal, removeTask}) => {
         .then(goal => removeGoal(goal))
     }
 
-
+    const handleCancel = () => {
+        setOpen(false);
+    }
+    const handleConfirm = () => {
+        deleteGoal();
+    }
     const handleDelete = () => {
-        deleteGoal()
+        setOpen(true);
     }
 
     const handleEdit = () => {
@@ -44,6 +50,14 @@ const Goal = ({goal, removeGoal, removeTask}) => {
                 <List celled horizontal size="mini" floated="right">
                     <List.Item as="a" onClick={handleEdit}>Edit</List.Item>
                     <List.Item as="a" onClick={handleDelete}>Delete</List.Item>
+                    <Confirm
+                        open={open}
+                        onCancel={handleCancel}
+                        onConfirm={handleConfirm}
+                        cancelButton='Never mind'
+                        confirmButton="Let's do it" 
+                        size='mini'
+                    />
                 </List>
             </Card.Content>
         </Card>
