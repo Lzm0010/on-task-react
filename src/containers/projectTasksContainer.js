@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import ProjectTask from '../components/projectTask';
+import ProjectTask from '../components/project/projectTask';
 import {Button, Icon} from 'semantic-ui-react';
 
 const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {

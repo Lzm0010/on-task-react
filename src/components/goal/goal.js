@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Card, List, Confirm} from 'semantic-ui-react';
 
-const Goal = ({goal, removeGoal, removeTask}) => {
+const Goal = ({goal, removeGoal, removeTask, handleGoalClick}) => {
     const [open, setOpen] = useState(false);
 
     const deleteGoal = () => {
@@ -33,7 +33,7 @@ const Goal = ({goal, removeGoal, removeTask}) => {
     }
 
     const handleEdit = () => {
-
+        handleGoalClick();
     }
 
     return (

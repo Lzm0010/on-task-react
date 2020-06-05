@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import Task from '../components/task';
-import TaskButton from '../components/taskButton';
+import Task from '../components/task/task';
+import TaskButton from '../components/task/taskButton';
 import {List} from 'semantic-ui-react';
 
 const TasksContainer = ({tasks, addTask, plannerDay, removeTask, updateTask}) => {

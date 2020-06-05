@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import Login from '../components/login';
-import Signup from '../components/signup';
+import Login from '../components/auth/login';
+import Signup from '../components/auth/signup';
 
 const Auth = () => {
     return (

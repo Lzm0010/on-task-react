@@ -1,9 +1,14 @@
 import React, {Fragment, useState} from 'react';
-import CalendarContainer from '../containers/calendarContainer';
+import Calendar from '../components/calendar/calendar';
+import Planner from '../components/planner/planner';
 import ProgressContainer from '../containers/progressContainer';
 import FriendsContainer from '../containers/friendsContainer';
-import PlannerContainer from '../containers/plannerContainer';
-import {Sidebar, Segment, Grid} from 'semantic-ui-react';
+import GoalButton from '../components/goal/goalButton';
+import ProjectButton from '../components/project/projectButton';
+import GoalModal from '../components/goal/goalModal';
+import ProjectModal from '../components/project/projectModal';
+import EditProjectModal from '../components/project/editProjectModal';
+import {Sidebar, Segment, Grid, Container} from 'semantic-ui-react';
 
 const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects, setProjects}) => {
     //============== STATE VARIABLES ===================//
@@ -12,6 +17,10 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     const [day, setDay] = useState(0);
     const [currentNote, setCurrentNote] = useState(null);
     const [dayTasks, setDayTasks] = useState([]);
+    const [goalModalOpen, setGoalModalOpen] = useState(false);
+    const [projModalOpen, setProjModalOpen] = useState(false);
+    const [editProjModalOpen, setEditProjModalOpen] = useState(false);
+    const [currentProject, setCurrentProject] = useState({});
 
     //============== GOAL FUNCTIONS ===================//
     const addGoal = (goal) => {
@@ -21,6 +30,13 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     const removeGoal = (goal) => {
         setGoals(goals => goals.filter(dGoal => dGoal.id !== goal.id))
     }
+
+    // const updateGoal = (goal) => {
+    //     const updatedGoals = [...goals];
+    //     const index = updatedGoals.findIndex(goalToUpdate => goalToUpdate.id === goal.id)
+    //     updatedGoals[index] = goal;
+    //     setGoals(updatedGoals);
+    // }
 
     //============== NOTE FUNCTIONS ===================//
     const addNote = (note) => {
@@ -49,15 +65,15 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
         setProjects(projects => [...projects, project])
     }
 
-    // const updateProject = (project) => {
-    //     const updatedProjects = [...projects];
-    //     const index = updatedProjects.findIndex(projectToUpdate => projectToUpdate.id === project.id)
-    //     updatedProjects[index] = project;
-    //     setProjects(updatedProjects);
-    // }
-
     const removeProject = (proj) => {
         setProjects(projs => projs.filter(dProj => dProj.id !== proj.id))
+    }
+
+    const updateProject = (project) => {
+        const updatedProjects = [...projects];
+        const index = updatedProjects.findIndex(projectToUpdate => projectToUpdate.id === project.id)
+        updatedProjects[index] = project;
+        setProjects(updatedProjects);
     }
 
     //============== TASK FUNCTIONS ===================//
@@ -104,25 +120,63 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
         }
     }
 
-    //============== RENDERING FUNCTION ===================//
+    //============== MODALS ===================//
 
+    const handleGoalModalOpen = () => {
+        setGoalModalOpen(true);
+    }
+
+    const handleGoalModalClose = () => {
+        setGoalModalOpen(false);
+    }
+
+    const handleProjModalOpen = () => {
+        setProjModalOpen(true);
+    }
+
+    const handleProjModalClose = () => {
+        setProjModalOpen(false);
+    }
+    
+    const handleEditProjModalOpen = () => {
+        setEditProjModalOpen(true);
+    }
+
+    const handleEditProjModalClose = () => {
+        setCurrentProject({});
+        setEditProjModalOpen(false);
+    }
+
+    //============== RENDERING FUNCTION ===================//
     return (
         <Fragment>
             <Sidebar.Pushable as={Segment} onClick={clickOffPlanner}>
-                <PlannerContainer visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} tasks={dayTasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} />
+                <Planner visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} tasks={dayTasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} />
                 <Sidebar.Pusher dimmed={dimmed && visible}>
                     <Grid columns={2}>
                         <Grid.Row stretched>
 
                             <Grid.Column width={12}>
-                                <Segment basic>
-                                    <CalendarContainer showDay={handlePlanner} tasks={tasks} addTask={addTask} addProject={addProject} addGoal={addGoal}/>
-                                </Segment>
+                                
+                                <Container style={{width: "90%"}}>
+                                    <Segment basic>
+                                        <Segment textAlign="right">
+                                            <GoalButton handleClick={handleGoalModalOpen} />
+                                            <ProjectButton handleClick={handleProjModalOpen}/>
+                                            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
+                                            <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject} />
+                                            {Object.keys(currentProject).length === 0 || <EditProjectModal handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateTask={updateTask} currentProject={currentProject} updateProject={updateProject}/>}
+                                        </Segment>
+
+                                        <Calendar showDay={handlePlanner} tasks={tasks} />
+                                    </Segment>
+                                </Container>
+
                             </Grid.Column>
 
                             <Grid.Column width={4}>
                                 <Segment>
-                                    <ProgressContainer goals={goals} projects={projects} removeGoal={removeGoal} removeProject={removeProject} removeTask={removeTask}/>
+                                    <ProgressContainer goals={goals} projects={projects} removeGoal={removeGoal} removeProject={removeProject} removeTask={removeTask} handleProjClick={handleProjModalOpen} handleGoalClick={handleGoalModalOpen} handleEditProjClick={handleEditProjModalOpen} setCurrentProject={setCurrentProject}/>
                                 </Segment>
                             </Grid.Column>
 

@@ -1,16 +1,16 @@
 import React, {Fragment} from 'react';
-import Goal from '../components/goal';
-import Project from '../components/project'
+import Goal from '../components/goal/goal';
+import Project from '../components/project/project'
 import {Divider, Icon, Header, Card} from 'semantic-ui-react';
 
-const ProgressContainer = ({goals, projects, removeGoal, removeProject, removeTask}) => {
+const ProgressContainer = ({goals, projects, removeGoal, removeProject, removeTask, handleProjClick, handleGoalClick, handleEditProjClick, setCurrentProject}) => {
 
     const displayProgressGoals = () => (
-        goals.map(goal => <Goal key={`g-${goal.id}`} goal={goal} removeGoal={removeGoal} removeTask={removeTask}/>)
+        goals.map(goal => <Goal key={`g-${goal.id}`} goal={goal} removeGoal={removeGoal} removeTask={removeTask} handleGoalClick={handleGoalClick}/>)
     )
     
     const displayProgressProjects = () => (
-        projects.map(project => <Project key={`p-${project.id}`} project={project} removeProject={removeProject} removeTask={removeTask}/>)
+        projects.map(project => <Project key={`p-${project.id}`} project={project} removeProject={removeProject} removeTask={removeTask} handleProjClick={handleProjClick} handleEditProjClick={handleEditProjClick} setCurrentProject={setCurrentProject}/>)
     )
 
     return (
