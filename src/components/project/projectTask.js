@@ -3,9 +3,9 @@ import DatePicker from 'react-datepicker';
 import { Form, Input } from 'semantic-ui-react';
 
 const ProjectTask = ({projectTask, updateProjectTask}) => {
-    const [name, setName] = useState("");
+    const [name, setName] = useState(projectTask.name || "");
     const [step_number, setStep_number] = useState(projectTask.step_number);
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState(projectTask.date !== null ? new Date(projectTask.date) : null);
 
     const controlUpdate = (value) => {
         updateProjectTask({...projectTask, ...value})

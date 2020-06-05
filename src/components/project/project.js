@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Card, List, Confirm} from 'semantic-ui-react';
 
-const Project = ({project, removeProject, removeTask}) => {
+const Project = ({project, removeProject, removeTask, handleEditProjClick, setCurrentProject}) => {
     const [open, setOpen] = useState(false);
 
     const deleteProject = () => {
@@ -25,15 +25,18 @@ const Project = ({project, removeProject, removeTask}) => {
     const handleCancel = () => {
         setOpen(false);
     }
+
     const handleConfirm = () => {
         deleteProject();
     }
+
     const handleDelete = () => {
         setOpen(true);
     }
 
     const handleEdit = () => {
-
+        setCurrentProject(project);
+        handleEditProjClick();
     }
 
     return (

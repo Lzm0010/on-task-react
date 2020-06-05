@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {useInput} from '../hooks/useInput';
-import {useSelect} from '../hooks/useSelect';
+import {useInput} from '../../hooks/useInput';
+import {useSelect} from '../../hooks/useSelect';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
 

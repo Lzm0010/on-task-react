@@ -1,18 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import Month from './month';
 import monthArray from '../../data/calendarData';
-import {Container, Pagination, Segment} from 'semantic-ui-react';
-import GoalButton from '../goalButton';
-import ProjectButton from '../projectButton';
-import GoalModal from '../goalModal';
-import ProjectModal from '../projectModal';
+import {Pagination, Segment} from 'semantic-ui-react';
 
-const Calendar = ({showDay, tasks, addTask, addProject, addGoal}) => {
+
+const Calendar = ({showDay, tasks}) => {
     const [today] = useState(new Date());
     const getCurrentMonth = () => (String(today.getMonth() + 1));
     const [activePage, setActivePage] = useState(getCurrentMonth());
-    const [goalModalOpen, setGoalModalOpen] = useState(false);
-    const [projModalOpen, setProjModalOpen] = useState(false);
+    
 
     const displayCalendar = () => {
         const currentMonth = monthArray[activePage - 1];
@@ -23,28 +19,8 @@ const Calendar = ({showDay, tasks, addTask, addProject, addGoal}) => {
         setActivePage(pageInfo.activePage)
     }
 
-    const handleGoalModalOpen = () => {
-        setGoalModalOpen(true);
-    }
-
-    const handleGoalModalClose = () => {
-        setGoalModalOpen(false);
-    }
-
-    const handleProjModalOpen = () => {
-        setProjModalOpen(true);
-    }
-
-    const handleProjModalClose = () => {
-        setProjModalOpen(false);
-    }
-
     return (
-        <Container style={{width: "90%"}}>
-            <Segment textAlign="right">
-                <GoalButton handleClick={handleGoalModalOpen} />
-                <ProjectButton handleClick={handleProjModalOpen}/>
-            </Segment>
+        <Fragment>
             {displayCalendar()}
             <Segment style={{textAlign: "center"}}>
                 <Pagination
@@ -54,9 +30,7 @@ const Calendar = ({showDay, tasks, addTask, addProject, addGoal}) => {
                     ellipsisItem={null}
                 />
             </Segment>
-            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
-            <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject}/>
-        </Container>
+        </Fragment>
     )
 }
 

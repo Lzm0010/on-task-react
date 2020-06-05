@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {useInput} from '../hooks/useInput';
+import {useInput} from '../../hooks/useInput';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
-import ProjectTasksContainer from '../containers/projectTasksContainer';
+import ProjectTasksContainer from '../../containers/projectTasksContainer';
 
 
 const ProjectModal = ({modalOpen, handleClose, addTask, addProject}) => {
