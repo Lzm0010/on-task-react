@@ -4,14 +4,15 @@ import {useSelect} from '../../hooks/useSelect';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
 
-const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
-    const {value:name, bind:bindName, reset:resetName} = useInput("");
-    const {value:goalType, bind:bindGoalType, reset:resetGoalType} = useSelect("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(null);
-    const {value:goalTotalDays, bind:bindGoalTotalDays, reset:resetGoalTotalDays} = useInput("");
-    const {value:goalPercentage, bind:bindGoalPercentage, reset:resetGoalPercentage} = useInput("");
-    const {value:frequency, bind:bindFrequency, reset:resetFrequency} = useSelect("");
+
+const EditGoalModal = ({modalOpen, handleClose, updateGoal, removeTask, addTask, currentGoal}) => {
+    const {value:name, bind:bindName} = useInput(currentGoal.name);
+    const {value:goalType, bind:bindGoalType} = useSelect(currentGoal.goal_type);
+    const [startDate, setStartDate] = useState(new Date(currentGoal.start_date));
+    const [endDate, setEndDate] = useState(new Date(currentGoal.end_date));
+    const {value:goalTotalDays, bind:bindGoalTotalDays} = useInput(currentGoal.goal_total_days);
+    const {value:goalPercentage, bind:bindGoalPercentage} = useInput(currentGoal.goal_percentage);
+    const {value:frequency, bind:bindFrequency} = useSelect(currentGoal.frequency);
 
     const typeOptions = [
         {key:'total', value:'total', text: 'Total'},
@@ -27,10 +28,13 @@ const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
         {key:'bimonthly', value:'bimonthly', text: 'Bi-Monthly'}
     ];
 
-    const newGoal = () => {
-        const goalUrl = `http://localhost:3000/goals`;
+    const editGoal = () => {
+        currentGoal.tasks.forEach(task => {
+            removeTask(task)
+        });
+        const goalUrl = `http://localhost:3000/goals/${currentGoal.id}`;
         const goalObj = {
-            'method': 'POST',
+            'method': 'PATCH',
             'headers': {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
@@ -49,22 +53,15 @@ const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
         fetch(goalUrl, goalObj)
         .then(res => res.json())
         .then(goal => {
-            addGoal(goal);
+            updateGoal(goal);
             goal.tasks.forEach(task => addTask(task));
         })
     }
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        newGoal();
+        editGoal();
         handleClose();
-        resetName();
-        resetGoalType();
-        resetGoalTotalDays();
-        resetGoalPercentage();
-        resetFrequency();
-        setStartDate(new Date());
-        setEndDate(null);
     };
 
     return(
@@ -150,4 +147,4 @@ const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
 
 }
 
-export default GoalModal;
+export default EditGoalModal;

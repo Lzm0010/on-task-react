@@ -7,6 +7,7 @@ import GoalButton from '../components/goal/goalButton';
 import ProjectButton from '../components/project/projectButton';
 import GoalModal from '../components/goal/goalModal';
 import ProjectModal from '../components/project/projectModal';
+import EditGoalModal from '../components/goal/editGoalModal';
 import EditProjectModal from '../components/project/editProjectModal';
 import {Sidebar, Segment, Grid, Container} from 'semantic-ui-react';
 
@@ -19,7 +20,9 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     const [dayTasks, setDayTasks] = useState([]);
     const [goalModalOpen, setGoalModalOpen] = useState(false);
     const [projModalOpen, setProjModalOpen] = useState(false);
+    const [editGoalModalOpen, setEditGoalModalOpen] = useState(false);
     const [editProjModalOpen, setEditProjModalOpen] = useState(false);
+    const [currentGoal, setCurrentGoal] = useState({});
     const [currentProject, setCurrentProject] = useState({});
 
     //============== GOAL FUNCTIONS ===================//
@@ -31,12 +34,12 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
         setGoals(goals => goals.filter(dGoal => dGoal.id !== goal.id))
     }
 
-    // const updateGoal = (goal) => {
-    //     const updatedGoals = [...goals];
-    //     const index = updatedGoals.findIndex(goalToUpdate => goalToUpdate.id === goal.id)
-    //     updatedGoals[index] = goal;
-    //     setGoals(updatedGoals);
-    // }
+    const updateGoal = (goal) => {
+        const updatedGoals = [...goals];
+        const index = updatedGoals.findIndex(goalToUpdate => goalToUpdate.id === goal.id)
+        updatedGoals[index] = goal;
+        setGoals(updatedGoals);
+    }
 
     //============== NOTE FUNCTIONS ===================//
     const addNote = (note) => {
@@ -97,9 +100,20 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
 
     const updateTask = (task) => {
         const updatedTasks = [...tasks];
-        const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id)
+        const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id);
         updatedTasks[index] = task;
         setTasks(updatedTasks);
+        setDayTasks(updatedTasks);
+    }
+
+    const updateAllTasks = (tasksToUpdate) => {
+        const updatedTasks = [...tasks];
+        tasksToUpdate.forEach(task => {
+            const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id);
+            index === -1 ? updatedTasks.push(task) : updatedTasks[index] = task;
+        });
+        setTasks(updatedTasks);
+        setDayTasks(updatedTasks);
     }
 
     //============== EVENT FUNCTIONS (PLANNER) ===================//
@@ -146,6 +160,15 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
         setCurrentProject({});
         setEditProjModalOpen(false);
     }
+    
+    const handleEditGoalModalOpen = () => {
+        setEditGoalModalOpen(true);
+    }
+
+    const handleEditGoalModalClose = () => {
+        setCurrentGoal({});
+        setEditGoalModalOpen(false);
+    }
 
     //============== RENDERING FUNCTION ===================//
     return (
@@ -163,9 +186,10 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
                                         <Segment textAlign="right">
                                             <GoalButton handleClick={handleGoalModalOpen} />
                                             <ProjectButton handleClick={handleProjModalOpen}/>
-                                            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
+                                            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal} addTask={addTask}/>
                                             <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject} />
-                                            {Object.keys(currentProject).length === 0 || <EditProjectModal handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateTask={updateTask} currentProject={currentProject} updateProject={updateProject}/>}
+                                            {Object.keys(currentProject).length === 0 || <EditProjectModal handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateAllTasks={updateAllTasks} currentProject={currentProject} updateProject={updateProject}/>}
+                                            {Object.keys(currentGoal).length === 0 || <EditGoalModal handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} addTask={addTask} removeTask={removeTask} currentGoal={currentGoal} updateGoal={updateGoal}/>}
                                         </Segment>
 
                                         <Calendar showDay={handlePlanner} tasks={tasks} />
@@ -176,7 +200,7 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
 
                             <Grid.Column width={4}>
                                 <Segment>
-                                    <ProgressContainer goals={goals} projects={projects} removeGoal={removeGoal} removeProject={removeProject} removeTask={removeTask} handleProjClick={handleProjModalOpen} handleGoalClick={handleGoalModalOpen} handleEditProjClick={handleEditProjModalOpen} setCurrentProject={setCurrentProject}/>
+                                    <ProgressContainer goals={goals} projects={projects} removeGoal={removeGoal} removeProject={removeProject} removeTask={removeTask} handleProjClick={handleProjModalOpen} handleGoalClick={handleGoalModalOpen} handleEditProjClick={handleEditProjModalOpen} handleEditGoalClick={handleEditGoalModalOpen} setCurrentGoal={setCurrentGoal} setCurrentProject={setCurrentProject}/>
                                 </Segment>
                             </Grid.Column>
 
