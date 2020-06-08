@@ -4,7 +4,7 @@ import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
 import ProjectTasksContainer from '../../containers/projectTasksContainer';
 
 
-const EditProjectModal = ({modalOpen, handleClose, updateAllTasks, currentProject, updateProject}) => {
+const EditProjectModal = ({modalOpen, handleClose, updateAllTasks, currentProject, updateProject, removeTask}) => {
     const [name, setName] = useState(currentProject.name);
     const [startDate, setStartDate] = useState(new Date(currentProject.start_date));
     const [endDate, setEndDate] = useState(new Date(currentProject.end_date));
@@ -94,7 +94,7 @@ const EditProjectModal = ({modalOpen, handleClose, updateAllTasks, currentProjec
 
                     </Form.Group>
     
-                    <ProjectTasksContainer projectTasks={projectTasks} setProjectTasks={setProjectTasks}/>
+                    <ProjectTasksContainer projectTasks={projectTasks} setProjectTasks={setProjectTasks} removeTask={removeTask}/>
 
                     <Divider hidden/>
 

@@ -188,7 +188,7 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
                                             <ProjectButton handleClick={handleProjModalOpen}/>
                                             <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal} addTask={addTask}/>
                                             <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject} />
-                                            {Object.keys(currentProject).length === 0 || <EditProjectModal handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateAllTasks={updateAllTasks} currentProject={currentProject} updateProject={updateProject}/>}
+                                            {Object.keys(currentProject).length === 0 || <EditProjectModal handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateAllTasks={updateAllTasks} removeTask={removeTask} currentProject={currentProject} updateProject={updateProject}/>}
                                             {Object.keys(currentGoal).length === 0 || <EditGoalModal handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} addTask={addTask} removeTask={removeTask} currentGoal={currentGoal} updateGoal={updateGoal}/>}
                                         </Segment>
 

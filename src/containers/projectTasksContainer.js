@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import ProjectTask from '../components/project/projectTask';
 import {Button, Icon} from 'semantic-ui-react';
 
-const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {
+const ProjectTasksContainer = ({projectTasks, setProjectTasks, removeTask}) => {
     
     const addProjectTask = (e) => {
         e.preventDefault();
@@ -16,8 +16,30 @@ const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {
         setProjectTasks(updatedTasks);
     }
 
+    const deleteTask = (task) => {
+        const taskUrl = `http://localhost:3000/tasks/${task.id}`
+        const taskObj = {
+            'method': 'DELETE',
+            'headers': {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }
+        fetch(taskUrl, taskObj)
+        .then(res => res.json())
+        .then(task => removeTask(task))
+    }
+
+    const removeProjectTask = (e, task) => {
+        e.preventDefault();
+        setProjectTasks(tasks => tasks.filter(dTask => dTask.step_number !== task.step_number))
+        if (task.id){
+            deleteTask(task)
+        }
+    }
+
     const displayProjectsTasks = () => (
-        projectTasks.map(pTask => <ProjectTask key={`pt-${pTask.step_number}`} projectTask={pTask} updateProjectTask={updateProjectTask}/>)
+        projectTasks.map(pTask => <ProjectTask key={`pt-${pTask.step_number}`} projectTask={pTask} updateProjectTask={updateProjectTask} removeProjectTask={removeProjectTask}/>)
     )
 
     return (
