@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
-import { Form, Input } from 'semantic-ui-react';
+import { Form, Input, Button, Icon, Segment } from 'semantic-ui-react';
 
-const ProjectTask = ({projectTask, updateProjectTask}) => {
+const ProjectTask = ({projectTask, updateProjectTask, removeProjectTask}) => {
     const [name, setName] = useState(projectTask.name || "");
     const [step_number, setStep_number] = useState(projectTask.step_number);
     const [date, setDate] = useState(projectTask.date !== null ? new Date(projectTask.date) : null);
@@ -28,6 +28,10 @@ const ProjectTask = ({projectTask, updateProjectTask}) => {
         controlUpdate({date})
     };
 
+    const handleDelete = (event) => {
+        removeProjectTask(event, projectTask)
+    }
+
     return (
         <Form.Group>
             <Form.Field
@@ -52,6 +56,11 @@ const ProjectTask = ({projectTask, updateProjectTask}) => {
                     placeholderText="Select date.."
                 />
             </Form.Field>
+            <Segment basic>
+                <Button icon size="small" negative style={{height: "90%"}} onClick={handleDelete}>
+                    <Icon name="close"/>
+                </Button>
+            </Segment>
         </Form.Group>
     )
 }
