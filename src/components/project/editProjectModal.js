@@ -4,7 +4,7 @@ import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
 import ProjectTasksContainer from '../../containers/projectTasksContainer';
 
 
-const EditProjectModal = ({modalOpen, handleClose, updateTask, currentProject, updateProject}) => {
+const EditProjectModal = ({modalOpen, handleClose, updateAllTasks, currentProject, updateProject}) => {
     const [name, setName] = useState(currentProject.name);
     const [startDate, setStartDate] = useState(new Date(currentProject.start_date));
     const [endDate, setEndDate] = useState(new Date(currentProject.end_date));
@@ -29,8 +29,8 @@ const EditProjectModal = ({modalOpen, handleClose, updateTask, currentProject, u
         fetch(projectUrl, projObj)
         .then(res => res.json())
         .then(project => {
-            project.tasks.forEach(task => updateTask(task));
             updateProject(project);
+            updateAllTasks(project.tasks);
         })
     }
 
