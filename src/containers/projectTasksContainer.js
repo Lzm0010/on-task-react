@@ -18,10 +18,12 @@ const ProjectTasksContainer = ({projectTasks, setProjectTasks, removeTask}) => {
 
     const deleteTask = (task) => {
         const taskUrl = `http://localhost:3000/tasks/${task.id}`
+        const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'DELETE',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         }

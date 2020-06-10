@@ -11,7 +11,7 @@ import EditGoalModal from '../components/goal/editGoalModal';
 import EditProjectModal from '../components/project/editProjectModal';
 import {Sidebar, Segment, Grid, Container} from 'semantic-ui-react';
 
-const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects, setProjects}) => {
+const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects, setProjects, user, planner}) => {
     //============== STATE VARIABLES ===================//
     const [visible, setVisible] = useState(false);
     const [dimmed, setDimmed] = useState(false);
@@ -174,7 +174,7 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
     return (
         <Fragment>
             <Sidebar.Pushable as={Segment} onClick={clickOffPlanner}>
-                <Planner visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} tasks={dayTasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} />
+                <Planner planner={planner} visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} tasks={dayTasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} />
                 <Sidebar.Pusher dimmed={dimmed && visible}>
                     <Grid columns={2}>
                         <Grid.Row stretched>
@@ -186,10 +186,10 @@ const Dashboard = ({notes, setNotes, tasks, setTasks, goals, setGoals, projects,
                                         <Segment textAlign="right">
                                             <GoalButton handleClick={handleGoalModalOpen} />
                                             <ProjectButton handleClick={handleProjModalOpen}/>
-                                            <GoalModal handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal} addTask={addTask}/>
-                                            <ProjectModal handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject} />
-                                            {Object.keys(currentProject).length === 0 || <EditProjectModal handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateAllTasks={updateAllTasks} removeTask={removeTask} currentProject={currentProject} updateProject={updateProject}/>}
-                                            {Object.keys(currentGoal).length === 0 || <EditGoalModal handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} addTask={addTask} removeTask={removeTask} currentGoal={currentGoal} updateGoal={updateGoal}/>}
+                                            <GoalModal user={user} handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal} addTask={addTask}/>
+                                            <ProjectModal user={user} handleClose={handleProjModalClose} modalOpen={projModalOpen} addTask={addTask} addProject={addProject} />
+                                            {Object.keys(currentProject).length === 0 || <EditProjectModal user={user} handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} updateAllTasks={updateAllTasks} removeTask={removeTask} currentProject={currentProject} updateProject={updateProject}/>}
+                                            {Object.keys(currentGoal).length === 0 || <EditGoalModal user={user} handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} addTask={addTask} removeTask={removeTask} currentGoal={currentGoal} updateGoal={updateGoal}/>}
                                         </Segment>
 
                                         <Calendar showDay={handlePlanner} tasks={tasks} />

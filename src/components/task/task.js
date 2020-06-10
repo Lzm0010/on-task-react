@@ -8,10 +8,12 @@ const Task = ({task, updateTask, removeTask}) => {
 
     const editTask = (name, is_completed) => {
         const taskUrl = `http://localhost:3000/tasks/${task.id}`
+        const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'PATCH',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }, 
             'body': JSON.stringify({name, is_completed})
@@ -26,10 +28,12 @@ const Task = ({task, updateTask, removeTask}) => {
 
     const deleteTask = () => {
         const taskUrl = `http://localhost:3000/tasks/${task.id}`
+        const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'DELETE',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         }

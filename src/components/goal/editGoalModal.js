@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
 
 
-const EditGoalModal = ({modalOpen, handleClose, updateGoal, removeTask, addTask, currentGoal}) => {
+const EditGoalModal = ({user, modalOpen, handleClose, updateGoal, removeTask, addTask, currentGoal}) => {
     const {value:name, bind:bindName} = useInput(currentGoal.name);
     const {value:goalType, bind:bindGoalType} = useSelect(currentGoal.goal_type);
     const [startDate, setStartDate] = useState(new Date(currentGoal.start_date));
@@ -33,10 +33,12 @@ const EditGoalModal = ({modalOpen, handleClose, updateGoal, removeTask, addTask,
             removeTask(task)
         });
         const goalUrl = `http://localhost:3000/goals/${currentGoal.id}`;
+        const token = localStorage.getItem('token')
         const goalObj = {
             'method': 'PATCH',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }, 
             'body': JSON.stringify({
@@ -47,7 +49,7 @@ const EditGoalModal = ({modalOpen, handleClose, updateGoal, removeTask, addTask,
                 goal_total_days: goalTotalDays,
                 goal_percentage: goalPercentage,
                 frequency,
-                user_id: 1
+                user_id: user.id
             })
         };
         fetch(goalUrl, goalObj)

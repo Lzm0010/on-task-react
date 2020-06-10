@@ -1,13 +1,32 @@
-import React, {Fragment} from 'react';
+import React, {useState} from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import PrivateRoute from './nav/privateRoute';
 import Auth from './pages/auth';
 import FetchContainer from './containers/fetchContainer';
 
 function App() {
+  const [authed, setAuthed] = useState(false)
+  const [user, setUser] = useState({})
+  const [planner, setPlanner] = useState({})
+
+  const handleLogin = (user, planner) => {
+    setUser(user)
+    setPlanner(planner)
+    setAuthed(true)
+  };
+
+  // const logOut = () => {
+  //   window.localStorage.clear()
+  //   window.location.href = "/login" 
+  // }
+  
   return (
-    <Fragment>
-      <Auth/>
-      <FetchContainer />
-    </Fragment>
+    <Router>
+      <Switch>
+        <Route exact path="/login" render={props => <Auth {...props} handleLogin={handleLogin}/>}/>
+        <PrivateRoute exact path="/dashboard" component={FetchContainer} authed={authed} planner={planner} user={user}/>
+      </Switch>
+    </Router>
   );
 }
 

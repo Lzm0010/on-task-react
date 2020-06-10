@@ -10,10 +10,12 @@ const Goal = ({goal, removeGoal, removeTask, handleEditGoalClick, setCurrentGoal
         });
 
         const goalUrl = `http://localhost:3000/goals/${goal.id}`
+        const token = localStorage.getItem('token')
         const goalObj = {
             'method': 'DELETE',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         }

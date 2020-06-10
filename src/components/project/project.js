@@ -10,10 +10,12 @@ const Project = ({project, removeProject, removeTask, handleEditProjClick, setCu
         });
     
         const projectUrl = `http://localhost:3000/projects/${project.id}`
+        const token = localStorage.getItem('token')
         const projectObj = {
             'method': 'DELETE',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         }
