@@ -4,7 +4,7 @@ import {useSelect} from '../../hooks/useSelect';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
 
-const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
+const GoalModal = ({user, modalOpen, handleClose, addGoal, addTask}) => {
     const {value:name, bind:bindName, reset:resetName} = useInput("");
     const {value:goalType, bind:bindGoalType, reset:resetGoalType} = useSelect("");
     const [startDate, setStartDate] = useState(new Date());
@@ -29,10 +29,12 @@ const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
 
     const newGoal = () => {
         const goalUrl = `http://localhost:3000/goals`;
+        const token = localStorage.getItem('token')
         const goalObj = {
             'method': 'POST',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }, 
             'body': JSON.stringify({
@@ -43,7 +45,7 @@ const GoalModal = ({modalOpen, handleClose, addGoal, addTask}) => {
                 goal_total_days: goalTotalDays,
                 goal_percentage: goalPercentage,
                 frequency,
-                user_id: 1
+                user_id: user.id
             })
         };
         fetch(goalUrl, goalObj)

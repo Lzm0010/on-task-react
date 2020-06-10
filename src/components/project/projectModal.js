@@ -5,7 +5,7 @@ import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
 import ProjectTasksContainer from '../../containers/projectTasksContainer';
 
 
-const ProjectModal = ({modalOpen, handleClose, addTask, addProject}) => {
+const ProjectModal = ({user, modalOpen, handleClose, addTask, addProject}) => {
     const {value:name, bind:bindName, reset:resetName} = useInput("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
@@ -13,17 +13,19 @@ const ProjectModal = ({modalOpen, handleClose, addTask, addProject}) => {
 
     const newProject = () => {
         const projectUrl = `http://localhost:3000/projects`;
+        const token = localStorage.getItem('token')
         const projObj = {
             'method': 'POST',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }, 
             'body': JSON.stringify({
                 name, 
                 start_date: startDate,
                 end_date: endDate,
-                user_id: 1,
+                user_id: user.id,
                 tasks_attributes: projectTasks
             })
         };

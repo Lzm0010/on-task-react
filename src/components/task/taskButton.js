@@ -1,26 +1,19 @@
 import React from 'react';
 import {Button, Icon} from 'semantic-ui-react';
 
-const TaskButton = ({addTask, plannerDay}) => {
-    const taskUrl = `http://localhost:3000/tasks`;
-
-    // t.string "name"
-    // t.integer "step_number"
-    // t.bigint "project_id"
-    // t.bigint "goal_id"
-    // t.bigint "planner_id"
-    // t.string "status"
-    // t.boolean "is_completed"
-    // t.datetime "date"
-
+const TaskButton = ({planner, addTask, plannerDay}) => {
+    
     const newTask = () => {
+        const taskUrl = `http://localhost:3000/tasks`;
+        const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'POST',
             'headers': {
                 "Accept": "application/json",
+                'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json"
             }, 
-            'body': JSON.stringify({name:null, planner_id: 1, status: "active", is_completed: false, date: plannerDay})
+            'body': JSON.stringify({name:null, planner_id: planner.id, status: "active", is_completed: false, date: plannerDay})
         }
         fetch(taskUrl, taskObj)
         .then(res => res.json())
