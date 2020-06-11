@@ -1,12 +1,16 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {TasksContext} from '../../context/tasksContext';
 import {Card, List, Confirm, Progress} from 'semantic-ui-react';
 
 const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate}) => {
     const tasksContext = useContext(TasksContext);
-    const {removeTask} = tasksContext;
-    
+    const {removeTask, tasksCompleted} = tasksContext;
     const [open, setOpen] = useState(false);
+    const [progress, setProgress] = useState(tasksCompleted.filter(task => task.goal_id === goal.id).length);
+
+    useEffect(() => {
+        setProgress(tasksCompleted.filter(task => task.goal_id === goal.id).length)
+    }, [tasksCompleted, goal.id])
 
     const deleteGoal = () => {
         goal.tasks.forEach(task => {
@@ -63,7 +67,7 @@ const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate
                 </Card.Meta>
                 <Card.Description>
                     {goal.goal_type === "total" ? (
-                        <Progress value={goal.completed_tasks} total={goal.total_tasks} progress='ratio' warning/>
+                        <Progress value={progress} total={goal.total_tasks} progress='ratio' warning/>
                     ) : (
                         <Progress percent={goal.percentage} progress warning/>
                     )}

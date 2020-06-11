@@ -8,12 +8,14 @@ export const TasksProvider = props => {
     const {
         tasks: initialTasks,
         dayTasks: initialDayTasks,
+        tasksCompleted: initialTasksCompleted,
         children
     } = props;
 
     //state to keep the values
     const [tasks, setTasks] = useState(initialTasks);
     const [dayTasks, setDayTasks] = useState(initialDayTasks);
+    const [tasksCompleted, setTasksCompleted] = useState(initialTasksCompleted);
     
     //============== TASK FUNCTIONS ===================//
     const getTasks = () => {
@@ -27,7 +29,10 @@ export const TasksProvider = props => {
         const tasksUrl = `http://localhost:3000/tasks`;
         fetch(tasksUrl, getObj)
             .then(res => res.json())
-            .then(tasks => setTasks(tasks))
+            .then(tasks => {
+                setTasks(tasks)
+                getTasksCompleted(tasks)
+            })
     }
 
     const addTask = (task) => {
@@ -43,6 +48,11 @@ export const TasksProvider = props => {
         setDayTasks(dayTasks);
     }
 
+    const getTasksCompleted = (tasks) => {
+        const completedTasks = tasks.filter(task => task.is_completed === true);
+        setTasksCompleted(completedTasks);
+    }
+
     const removeTask = (task) => {
         setTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
         setDayTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
@@ -53,15 +63,7 @@ export const TasksProvider = props => {
         const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id);
         updatedTasks[index] = task;
         setTasks(updatedTasks);
-        // if (task.goal_id !== null){
-        //     const goal = goals.find(goal => goal.id === task.goal_id);
-        //     updateGoal(goal);
-        // } else if (task.project_id !== null){
-        //     const proj = projects.find(proj => proj.id === task.project_id);
-        //     console.log(proj)
-        //     updateProject(proj)
-        // }
-        // console.log(projects, goals)
+        getTasksCompleted(updatedTasks);
     }
 
     const updateAllTasks = (tasksToUpdate) => {
@@ -78,6 +80,7 @@ export const TasksProvider = props => {
     const tasksContext = {
         tasks,
         setTasks,
+        tasksCompleted,
         getTasks,
         dayTasks,
         setDayTasks,
@@ -95,10 +98,12 @@ export const {TasksConsumer} = TasksContext;
 
 TasksProvider.propTypes = {
     tasks: PropTypes.array,
-    dayTasks: PropTypes.array
+    dayTasks: PropTypes.array,
+    tasksCompleted: PropTypes.array
 };
 
 TasksProvider.defaultProps = {
     tasks: [],
-    dayTasks: []
+    dayTasks: [],
+    tasksCompleted: []
 };

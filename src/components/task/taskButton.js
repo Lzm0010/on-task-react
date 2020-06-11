@@ -3,7 +3,7 @@ import {TasksContext} from '../../context/tasksContext';
 import {Button, Icon} from 'semantic-ui-react';
 
 const TaskButton = ({planner, plannerDay}) => {
-    const tasksContext = useContext*(TasksContext);
+    const tasksContext = useContext(TasksContext);
     const {addTask} = tasksContext;
     
     const newTask = () => {

@@ -4,9 +4,9 @@ import TasksContainer from '../../containers/tasksContainer';
 import {Divider, Icon, Header, Sidebar, Segment} from 'semantic-ui-react';
 
 const Planner = ({planner, visible, plannerDay, note, addNote, setCurrentNote}) => {
-    const notesUrl = "http://localhost:3000/notes" //get and post 
     
     const newNote = (content) => {
+        const notesUrl = "http://localhost:3000/notes"
         const token = localStorage.getItem('token')
         const noteObj = {
             'method': 'POST',
