@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import {useHistory} from 'react-router-dom';
 import {useInput} from '../../hooks/useInput';
 import {Button, Form, Card, Input} from 'semantic-ui-react';
 
 export default function Login (props) {
     const history = useHistory()
+    const tasksContext = useContext(TasksContext);
+    const {getTasks} = tasksContext;
 
     const {value:username, bind:bindUsername} = useInput("");
     const {value:password, bind:bindPassword} = useInput("");
@@ -25,6 +28,7 @@ export default function Login (props) {
                 .then(user => {
                     localStorage.setItem('token', user.jwt)
                     props.handleLogin(user.user, user.planner)
+                    getTasks();
                 })
     }
     

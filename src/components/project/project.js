@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
-import {Card, List, Confirm} from 'semantic-ui-react';
+import React, {useState, useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
+import {Card, List, Confirm, Progress} from 'semantic-ui-react';
 
-const Project = ({project, removeProject, removeTask, handleEditProjClick, setCurrentProject}) => {
+const Project = ({project, removeProject, handleEditProjClick, setCurrentProject, formatDate}) => {
+    const tasksContext = useContext(TasksContext);
+    const {removeTask} = tasksContext;
     const [open, setOpen] = useState(false);
+    const [progress, setProgress] = useState(project.completed_tasks);
+    const [progressTotal, setProgressTotal] = useState(project.total_tasks);
 
     const deleteProject = () => {
         project.tasks.forEach(task => {
@@ -47,8 +52,11 @@ const Project = ({project, removeProject, removeTask, handleEditProjClick, setCu
                 <Card.Header>
                     {project.name}
                 </Card.Header>
+                <Card.Meta>
+                    {formatDate(project.start_date)} - {formatDate(project.end_date)}
+                </Card.Meta>
                 <Card.Description>
-                    Progress Filler
+                <Progress value={progress} total={progressTotal} progress='ratio' warning/>
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>

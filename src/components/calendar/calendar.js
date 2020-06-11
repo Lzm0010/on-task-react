@@ -4,7 +4,7 @@ import monthArray from '../../data/calendarData';
 import {Pagination, Segment} from 'semantic-ui-react';
 
 
-const Calendar = ({showDay, tasks}) => {
+const Calendar = ({showDay}) => {
     const [today] = useState(new Date());
     const getCurrentMonth = () => (String(today.getMonth() + 1));
     const [activePage, setActivePage] = useState(getCurrentMonth());
@@ -12,7 +12,7 @@ const Calendar = ({showDay, tasks}) => {
 
     const displayCalendar = () => {
         const currentMonth = monthArray[activePage - 1];
-        return <Month month={currentMonth.month} monthId={activePage} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay} tasks={tasks}/> 
+        return <Month month={currentMonth.month} monthId={activePage} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay}/> 
     }
 
     const handlePaginationChange = (e, pageInfo) => {

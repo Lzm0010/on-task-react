@@ -1,7 +1,11 @@
-import React, {useState} from 'react';
-import {Card, List, Confirm} from 'semantic-ui-react';
+import React, {useState, useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
+import {Card, List, Confirm, Progress} from 'semantic-ui-react';
 
-const Goal = ({goal, removeGoal, removeTask, handleEditGoalClick, setCurrentGoal}) => {
+const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate}) => {
+    const tasksContext = useContext(TasksContext);
+    const {removeTask} = tasksContext;
+    
     const [open, setOpen] = useState(false);
 
     const deleteGoal = () => {
@@ -39,14 +43,33 @@ const Goal = ({goal, removeGoal, removeTask, handleEditGoalClick, setCurrentGoal
         handleEditGoalClick();
     }
 
+    // t.string "name"
+    // t.datetime "start_date"
+    // t.datetime "end_date"
+    // t.string "goal_type"
+    // t.integer "goal_total_days"
+    // t.float "goal_percentage"
+    // t.bigint "user_id", null: false
+    // t.string "frequency"
+
     return (
         <Card>
             <Card.Content>
                 <Card.Header>
                     {goal.name}
                 </Card.Header>
+                <Card.Meta>
+                    {formatDate(goal.start_date)} - {formatDate(goal.end_date)}
+                </Card.Meta>
                 <Card.Description>
-                    Progress Filler
+                    {goal.goal_type === "total" ? (
+                        <Progress value={goal.completed_tasks} total={goal.total_tasks} progress='ratio' warning/>
+                    ) : (
+                        <Progress percent={goal.percentage} progress warning/>
+                    )}
+                </Card.Description>
+                <Card.Description>
+                    {goal.frequency}
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>

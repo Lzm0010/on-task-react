@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import {Button, Icon} from 'semantic-ui-react';
 
-const TaskButton = ({planner, addTask, plannerDay}) => {
+const TaskButton = ({planner, plannerDay}) => {
+    const tasksContext = useContext*(TasksContext);
+    const {addTask} = tasksContext;
     
     const newTask = () => {
         const taskUrl = `http://localhost:3000/tasks`;

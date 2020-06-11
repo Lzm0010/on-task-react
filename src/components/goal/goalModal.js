@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import {useInput} from '../../hooks/useInput';
 import {useSelect} from '../../hooks/useSelect';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
 
-const GoalModal = ({user, modalOpen, handleClose, addGoal, addTask}) => {
+const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
+    const tasksContext = useContext(TasksContext);
+    const {addTask} = tasksContext;
+
     const {value:name, bind:bindName, reset:resetName} = useInput("");
     const {value:goalType, bind:bindGoalType, reset:resetGoalType} = useSelect("");
     const [startDate, setStartDate] = useState(new Date());

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import Day from './day';
 import {Grid} from 'semantic-ui-react';
 
-const Week = ({monthId, week, numberOfDays, offset, showDay, tasks}) => {
+const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
+    const tasksContext = useContext(TasksContext);
+    const {tasks} = tasksContext;
 
     const displayWeek = () => {
         const dayArray = [1, 2, 3, 4, 5, 6, 7];

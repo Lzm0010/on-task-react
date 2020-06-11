@@ -1,7 +1,10 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import {Checkbox, Button, Input} from 'semantic-ui-react';
 
-const Task = ({task, updateTask, removeTask}) => {
+const Task = ({task}) => {
+    const tasksContext = useContext(TasksContext);
+    const {updateTask, removeTask} = tasksContext;
     const [name, setName] = useState(task.name);
     const [checked, setChecked] = useState(task.is_completed);
     const [editing, setEditing] = useState(task.name ? false : true);
