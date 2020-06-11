@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import {useInput} from '../../hooks/useInput';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
 import ProjectTasksContainer from '../../containers/projectTasksContainer';
 
 
-const ProjectModal = ({user, modalOpen, handleClose, addTask, addProject}) => {
+const ProjectModal = ({user, modalOpen, handleClose, addProject}) => {
+    const tasksContext = useContext(TasksContext);
+    const {addTask} = tasksContext;
+
     const {value:name, bind:bindName, reset:resetName} = useInput("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);

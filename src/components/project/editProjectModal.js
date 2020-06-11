@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {TasksContext} from '../../context/tasksContext';
 import DatePicker from 'react-datepicker';
 import {Form, Modal, Button, Divider, Input} from 'semantic-ui-react';
 import ProjectTasksContainer from '../../containers/projectTasksContainer';
 
 
-const EditProjectModal = ({user, modalOpen, handleClose, updateAllTasks, currentProject, updateProject, removeTask}) => {
+const EditProjectModal = ({user, modalOpen, handleClose, currentProject, updateProject}) => {
+    const tasksContext = useContext(TasksContext);
+    const {updateAllTasks} = tasksContext;
+
     const [name, setName] = useState(currentProject.name);
     const [startDate, setStartDate] = useState(new Date(currentProject.start_date));
     const [endDate, setEndDate] = useState(new Date(currentProject.end_date));
@@ -96,7 +100,7 @@ const EditProjectModal = ({user, modalOpen, handleClose, updateAllTasks, current
 
                     </Form.Group>
     
-                    <ProjectTasksContainer projectTasks={projectTasks} setProjectTasks={setProjectTasks} removeTask={removeTask}/>
+                    <ProjectTasksContainer projectTasks={projectTasks} setProjectTasks={setProjectTasks} />
 
                     <Divider hidden/>
 

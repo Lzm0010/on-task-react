@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {TasksProvider} from './context/tasksContext';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import PrivateRoute from './nav/privateRoute';
 import Auth from './pages/auth';
@@ -21,12 +22,14 @@ function App() {
   // }
   
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/login" render={props => <Auth {...props} handleLogin={handleLogin}/>}/>
-        <PrivateRoute exact path="/dashboard" component={FetchContainer} authed={authed} planner={planner} user={user}/>
-      </Switch>
-    </Router>
+    <TasksProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/login" render={props => <Auth {...props} handleLogin={handleLogin}/>}/>
+          <PrivateRoute exact path="/dashboard" component={FetchContainer} authed={authed} planner={planner} user={user}/>
+        </Switch>
+      </Router>
+    </TasksProvider>
   );
 }
 

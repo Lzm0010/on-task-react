@@ -3,7 +3,7 @@ import Note from './note';
 import TasksContainer from '../../containers/tasksContainer';
 import {Divider, Icon, Header, Sidebar, Segment} from 'semantic-ui-react';
 
-const Planner = ({planner, visible, plannerDay, note, addNote, setCurrentNote, tasks, addTask, removeTask, updateTask}) => {
+const Planner = ({planner, visible, plannerDay, note, addNote, setCurrentNote}) => {
     const notesUrl = "http://localhost:3000/notes" //get and post 
     
     const newNote = (content) => {
@@ -66,7 +66,7 @@ const Planner = ({planner, visible, plannerDay, note, addNote, setCurrentNote, t
                     Tasks
                 </Header>
             </Divider>
-            <TasksContainer planner={planner} tasks={tasks} addTask={addTask} removeTask={removeTask} updateTask={updateTask} plannerDay={plannerDay}/>
+            <TasksContainer planner={planner} plannerDay={plannerDay}/>
             <Divider horizontal>
                 <Header as='h4'>
                     <Icon name="pencil"/>

@@ -1,9 +1,12 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useContext} from 'react';
+import {TasksContext} from '../context/tasksContext';
 import ProjectTask from '../components/project/projectTask';
 import {Button, Icon} from 'semantic-ui-react';
 
-const ProjectTasksContainer = ({projectTasks, setProjectTasks, removeTask}) => {
-    
+const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {
+    const tasksContext = useContext(TasksContext);
+    const {removeTask} = tasksContext;
+
     const addProjectTask = (e) => {
         e.preventDefault();
         setProjectTasks(tasks => [...projectTasks, {name:null, step_number: projectTasks.length+1, status: "active", is_completed: false, date: null}]);

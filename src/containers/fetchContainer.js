@@ -3,12 +3,11 @@ import Dashboard from '../pages/dashboard';
 
 const FetchContainer = (props) => {
     const [notes, setNotes] = useState([]);
-    const [tasks, setTasks] = useState([]);
     const [goals, setGoals] = useState([]);
     const [projects, setProjects] = useState([]);
     
     
-     //============== USE EFFECT HOOK ===================//
+    //============== USE EFFECT HOOK ===================//
     useEffect(() => {
         const token = localStorage.getItem('token');
         const getObj = {
@@ -23,13 +22,6 @@ const FetchContainer = (props) => {
             fetch(notesUrl, getObj)
                 .then(res => res.json())
                 .then(notes => setNotes(notes))
-        }
-    
-        const getTasks = () => {
-            const tasksUrl = `http://localhost:3000/tasks`;
-            fetch(tasksUrl, getObj)
-                .then(res => res.json())
-                .then(tasks => setTasks(tasks))
         }
     
         const getGoals = () => {
@@ -47,14 +39,12 @@ const FetchContainer = (props) => {
         }
 
         getNotes()
-        getTasks()
         getGoals()
         getProjects()
-        console.log(props.user)
     }, [])
 
     return (
-        <Dashboard user={props.user} goals={goals} setGoals={setGoals} notes={notes} setNotes={setNotes} projects={projects} setProjects={setProjects} tasks={tasks} setTasks={setTasks}/>
+        <Dashboard user={props.user} goals={goals} setGoals={setGoals} notes={notes} setNotes={setNotes} projects={projects} setProjects={setProjects}/>
     )
 }
 
