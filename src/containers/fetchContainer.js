@@ -44,7 +44,7 @@ const FetchContainer = (props) => {
     }, [])
 
     return (
-        <Dashboard user={props.user} goals={goals} setGoals={setGoals} notes={notes} setNotes={setNotes} projects={projects} setProjects={setProjects}/>
+        <Dashboard user={props.user} planner={props.planner} goals={goals} setGoals={setGoals} notes={notes} setNotes={setNotes} projects={projects} setProjects={setProjects}/>
     )
 }
 
