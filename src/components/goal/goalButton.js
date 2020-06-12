@@ -7,7 +7,7 @@ const GoalButton = ({handleClick}) => {
     }
 
     return (
-        <Button onClick={handleAddGoal} color="teal">
+        <Button floated="right" onClick={handleAddGoal} color="teal">
             <Icon name="plus"/> Goal
         </Button>
     )
