@@ -8,7 +8,7 @@ const ProjectButton = ({handleClick}) => {
     }
 
     return (
-        <Button color="teal" onClick={handleAddProject}>
+        <Button floated="right" color="teal" onClick={handleAddProject}>
             <Icon name="plus"/> Project
         </Button>
     )

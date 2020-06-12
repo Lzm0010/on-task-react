@@ -3,14 +3,14 @@ import {TasksContext} from '../context/tasksContext';
 import Calendar from '../components/calendar/calendar';
 import Planner from '../components/planner/planner';
 import ProgressContainer from '../containers/progressContainer';
-import FriendsContainer from '../containers/friendsContainer';
 import GoalButton from '../components/goal/goalButton';
 import ProjectButton from '../components/project/projectButton';
 import GoalModal from '../components/goal/goalModal';
 import ProjectModal from '../components/project/projectModal';
 import EditGoalModal from '../components/goal/editGoalModal';
 import EditProjectModal from '../components/project/editProjectModal';
-import {Sidebar, Segment, Grid, Container} from 'semantic-ui-react';
+import {Sidebar, Segment, Grid, Container, Item} from 'semantic-ui-react';
+import TaskFilter from '../components/task/taskFilter';
 
 const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, user, planner}) => {
     const tasksContext = useContext(TasksContext);
@@ -150,14 +150,23 @@ const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, use
                                 
                                 <Container style={{width: "90%"}}>
                                     <Segment basic>
-                                        <Segment textAlign="right">
-                                            <GoalButton handleClick={handleGoalModalOpen} />
-                                            <ProjectButton handleClick={handleProjModalOpen}/>
-                                            <GoalModal user={user} handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
-                                            <ProjectModal user={user} handleClose={handleProjModalClose} modalOpen={projModalOpen} addProject={addProject} />
-                                            {Object.keys(currentGoal).length === 0 || <EditGoalModal user={user} handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} currentGoal={currentGoal} updateGoal={updateGoal}/>}
-                                            {Object.keys(currentProject).length === 0 || <EditProjectModal user={user} handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} currentProject={currentProject} updateProject={updateProject}/>}
-                                        </Segment>
+                                        <Grid.Row>
+                                            <Item.Group>
+                                                <Item>
+                                                    <Item.Content verticalAlign="bottom">
+                                                            <Segment floated="left">
+                                                                <TaskFilter />
+                                                            </Segment>
+                                                            <GoalButton handleClick={handleGoalModalOpen} />
+                                                            <ProjectButton handleClick={handleProjModalOpen}/>
+                                                            <GoalModal user={user} handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
+                                                            <ProjectModal user={user} handleClose={handleProjModalClose} modalOpen={projModalOpen} addProject={addProject} />
+                                                            {Object.keys(currentGoal).length === 0 || <EditGoalModal user={user} handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} currentGoal={currentGoal} updateGoal={updateGoal}/>}
+                                                            {Object.keys(currentProject).length === 0 || <EditProjectModal user={user} handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} currentProject={currentProject} updateProject={updateProject}/>}
+                                                    </Item.Content>
+                                                </Item>
+                                            </Item.Group>
+                                        </Grid.Row>
 
                                         <Calendar showDay={handlePlanner} />
                                     </Segment>

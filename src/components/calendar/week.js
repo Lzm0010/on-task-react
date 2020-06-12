@@ -5,7 +5,7 @@ import {Grid} from 'semantic-ui-react';
 
 const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
     const tasksContext = useContext(TasksContext);
-    const {tasks} = tasksContext;
+    const {filteredTasks} = tasksContext;
 
     const displayWeek = () => {
         const dayArray = [1, 2, 3, 4, 5, 6, 7];
@@ -31,7 +31,7 @@ const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
 
         const dailyTasks = (day) => {
             const railsDay = formattedDay(day)
-            const dayTasks = tasks.filter(task => {
+            const dayTasks = filteredTasks.filter(task => {
                 const taskDate = task.date.slice(0,10).replace(/-/g, "");
                 return taskDate === railsDay
             })

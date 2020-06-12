@@ -9,6 +9,7 @@ export const TasksProvider = props => {
         tasks: initialTasks,
         dayTasks: initialDayTasks,
         tasksCompleted: initialTasksCompleted,
+        filteredTasks: initialFilteredTasks,
         children
     } = props;
 
@@ -16,6 +17,7 @@ export const TasksProvider = props => {
     const [tasks, setTasks] = useState(initialTasks);
     const [dayTasks, setDayTasks] = useState(initialDayTasks);
     const [tasksCompleted, setTasksCompleted] = useState(initialTasksCompleted);
+    const [filteredTasks, setFilteredTasks] = useState(initialFilteredTasks);
     
     //============== TASK FUNCTIONS ===================//
     const getTasks = () => {
@@ -30,13 +32,15 @@ export const TasksProvider = props => {
         fetch(tasksUrl, getObj)
             .then(res => res.json())
             .then(tasks => {
-                setTasks(tasks)
-                getTasksCompleted(tasks)
+                setTasks(tasks);
+                setFilteredTasks(tasks);
+                getTasksCompleted(tasks);
             })
     }
 
     const addTask = (task) => {
         setTasks(tasks => [...tasks, task])
+        // setFilteredTasks(tasks => [...tasks, task])
         setDayTasks(tasks => [...tasks, task])
     }
 
@@ -53,8 +57,35 @@ export const TasksProvider = props => {
         setTasksCompleted(completedTasks);
     }
 
+    const filterTasks = (goalCheck, plannerCheck, projectCheck) => {
+        console.log(goalCheck, plannerCheck, projectCheck)
+        const isChecked = (task) => {
+            if (goalCheck && plannerCheck && projectCheck) {
+                return true
+            } else if (goalCheck && plannerCheck){
+                return task.goal_id !== null || task.planner_id !== null
+            } else if (goalCheck && projectCheck){
+                return task.goal_id !== null || task.project_id !== null
+            } else if (plannerCheck && projectCheck){
+                return task.planner_id !== null || task.project_id !== null
+            } else if (plannerCheck) {
+                return task.planner_id !== null
+            } else if (projectCheck) {
+                return task.project_id !== null
+            } else if (goalCheck) {
+                return task.goal_id !== null
+            } else {
+                return false
+            }
+        }
+
+        const filteredTasks = tasks.filter(isChecked)
+        setFilteredTasks(filteredTasks);
+    }
+
     const removeTask = (task) => {
         setTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
+        // setFilteredTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
         setDayTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
     }
 
@@ -63,6 +94,7 @@ export const TasksProvider = props => {
         const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id);
         updatedTasks[index] = task;
         setTasks(updatedTasks);
+        // setFilteredTasks(updatedTasks);
         getTasksCompleted(updatedTasks);
     }
 
@@ -73,19 +105,20 @@ export const TasksProvider = props => {
             index === -1 ? updatedTasks.push(task) : updatedTasks[index] = task;
         });
         setTasks(updatedTasks);
+        // setFilteredTasks(updatedTasks);
         setDayTasks(updatedTasks);
     }
 
     //make the context object
     const tasksContext = {
-        tasks,
-        setTasks,
         tasksCompleted,
         getTasks,
         dayTasks,
         setDayTasks,
         addTask,
         getTasksByDay,
+        filterTasks,
+        filteredTasks,
         removeTask,
         updateTask,
         updateAllTasks
@@ -99,11 +132,13 @@ export const {TasksConsumer} = TasksContext;
 TasksProvider.propTypes = {
     tasks: PropTypes.array,
     dayTasks: PropTypes.array,
-    tasksCompleted: PropTypes.array
+    tasksCompleted: PropTypes.array,
+    filteredTasks: PropTypes.array
 };
 
 TasksProvider.defaultProps = {
     tasks: [],
     dayTasks: [],
-    tasksCompleted: []
+    tasksCompleted: [],
+    filteredTasks: []
 };
