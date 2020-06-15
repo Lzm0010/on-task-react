@@ -141,7 +141,7 @@ const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, use
     return (
         <Fragment>
             <Sidebar.Pushable as={Segment} onClick={clickOffPlanner}>
-                <Planner planner={planner} visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote}/>
+                <Planner planner={planner} visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} projects={projects} />
                 <Sidebar.Pusher dimmed={dimmed && visible}>
                     <Grid columns={2}>
                         <Grid.Row stretched>
