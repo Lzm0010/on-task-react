@@ -44,7 +44,7 @@ const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {
     }
 
     const displayProjectsTasks = () => (
-        projectTasks.map(pTask => <ProjectTask key={`pt-${pTask.step_number}`} projectTask={pTask} updateProjectTask={updateProjectTask} removeProjectTask={removeProjectTask}/>)
+        projectTasks.sort((a,b) => a.step_number - b.step_number).map((pTask, i)=> <ProjectTask key={`pt-${i}`} projectTask={pTask} updateProjectTask={updateProjectTask} removeProjectTask={removeProjectTask}/>)
     )
 
     return (
