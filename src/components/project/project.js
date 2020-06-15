@@ -7,10 +7,12 @@ const Project = ({project, removeProject, handleEditProjClick, setCurrentProject
     const {removeTask, tasksCompleted} = tasksContext;
     const [open, setOpen] = useState(false);
     const [progress, setProgress] = useState(tasksCompleted.filter(task => task.project_id === project.id).length);
+    const [total, setTotal] = useState(project.tasks.length);
 
     useEffect(() => {
         setProgress(tasksCompleted.filter(task => task.project_id === project.id).length)
-    }, [tasksCompleted, project.id])
+        setTotal(project.tasks.length)
+    }, [tasksCompleted, project.id, project.tasks])
 
     const deleteProject = () => {
         project.tasks.forEach(task => {
@@ -59,7 +61,7 @@ const Project = ({project, removeProject, handleEditProjClick, setCurrentProject
                     {formatDate(project.start_date)} - {formatDate(project.end_date)}
                 </Card.Meta>
                 <Card.Description>
-                <Progress value={progress} total={project.total_tasks} progress='ratio' warning/>
+                <Progress value={progress} total={total} progress='ratio' warning/>
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>

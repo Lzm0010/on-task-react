@@ -15,16 +15,21 @@ const Day = ({day, displayDay, showDay, dailyTasks}) => {
 
     return (
         <Grid.Column width={2}>
-            <Card onClick={handleClick}>
-                <Card.Content>
-                    <Card.Header>
-                        {displayDay}
-                    </Card.Header>
-                    <Feed>
-                        {displayTasks()}
-                    </Feed>
-                </Card.Content>
-            </Card>
+            {day ? (
+                <Card onClick={handleClick}>
+                    <Card.Content>
+                        <Card.Header>
+                            {displayDay}
+                        </Card.Header>
+                        <Feed>
+                            {displayTasks()}
+                        </Feed>
+                    </Card.Content>
+                </Card>
+            ) 
+            : (
+                null
+            )}
         </Grid.Column>
     )
 }
