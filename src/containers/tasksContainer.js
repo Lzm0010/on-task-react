@@ -4,12 +4,12 @@ import Task from '../components/task/task';
 import TaskButton from '../components/task/taskButton';
 import {List} from 'semantic-ui-react';
 
-const TasksContainer = ({planner, plannerDay}) => {
+const TasksContainer = ({planner, plannerDay, projects}) => {
     const tasksContext = useContext(TasksContext);
     const {dayTasks} = tasksContext;
 
     const displayTasks = () => (
-        dayTasks.map(task => <List.Item key={task.id}><Task task={task}/></List.Item>)
+        dayTasks.map(task => <List.Item key={task.id}><Task projects={projects} task={task}/></List.Item>)
     )
 
     return (

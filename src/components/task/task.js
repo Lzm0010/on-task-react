@@ -2,7 +2,7 @@ import React, {Fragment, useState, useContext} from 'react';
 import {TasksContext} from '../../context/tasksContext';
 import {Checkbox, Button, Input} from 'semantic-ui-react';
 
-const Task = ({task}) => {
+const Task = ({task, projects}) => {
     const tasksContext = useContext(TasksContext);
     const {updateTask, removeTask} = tasksContext;
     const [name, setName] = useState(task.name);
@@ -26,6 +26,11 @@ const Task = ({task}) => {
         .then(task => {
             setName(name);
             updateTask(task);
+            if (task.project_id !== null){
+                const proj = projects.find(proj => proj.id === task.project_id);
+                const projTasks = proj.tasks.map(ptask => ptask.id === task.id ? task : ptask);
+                proj.tasks = projTasks;
+            }
         })
     }
 
@@ -42,7 +47,10 @@ const Task = ({task}) => {
         }
         fetch(taskUrl, taskObj)
         .then(res => res.json())
-        .then(task => removeTask(task))
+        .then(task => {
+            removeTask(task)
+        
+        })
     }
 
     const toggleCheck = () => {
@@ -61,7 +69,7 @@ const Task = ({task}) => {
     }
 
     const handleEdit = () => {
-        editTask(name, false);
+        editTask(name, checked);
         toggleEditing();
     }
 
