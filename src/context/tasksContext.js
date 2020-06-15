@@ -40,7 +40,7 @@ export const TasksProvider = props => {
 
     const addTask = (task) => {
         setTasks(tasks => [...tasks, task])
-        // setFilteredTasks(tasks => [...tasks, task])
+        setFilteredTasks(tasks => [...tasks, task])
         setDayTasks(tasks => [...tasks, task])
     }
 
@@ -58,7 +58,6 @@ export const TasksProvider = props => {
     }
 
     const filterTasks = (goalCheck, plannerCheck, projectCheck) => {
-        console.log(goalCheck, plannerCheck, projectCheck)
         const isChecked = (task) => {
             if (goalCheck && plannerCheck && projectCheck) {
                 return true
@@ -85,7 +84,7 @@ export const TasksProvider = props => {
 
     const removeTask = (task) => {
         setTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
-        // setFilteredTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
+        setFilteredTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
         setDayTasks(tasks => tasks.filter(dTask => dTask.id !== task.id))
     }
 
@@ -94,7 +93,7 @@ export const TasksProvider = props => {
         const index = updatedTasks.findIndex(taskToUpdate => taskToUpdate.id === task.id);
         updatedTasks[index] = task;
         setTasks(updatedTasks);
-        // setFilteredTasks(updatedTasks);
+        setFilteredTasks(updatedTasks);
         getTasksCompleted(updatedTasks);
     }
 
@@ -105,7 +104,7 @@ export const TasksProvider = props => {
             index === -1 ? updatedTasks.push(task) : updatedTasks[index] = task;
         });
         setTasks(updatedTasks);
-        // setFilteredTasks(updatedTasks);
+        setFilteredTasks(updatedTasks);
         setDayTasks(updatedTasks);
     }
 

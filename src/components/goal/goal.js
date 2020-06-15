@@ -67,7 +67,7 @@ const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate
                 </Card.Meta>
                 <Card.Description>
                     {goal.goal_type === "total" ? (
-                        <Progress value={progress} total={goal.total_tasks} progress='ratio' warning/>
+                        <Progress value={progress} total={goal.tasks.length} progress='ratio' warning/>
                     ) : (
                         <Progress percent={goal.percentage} progress warning/>
                     )}
