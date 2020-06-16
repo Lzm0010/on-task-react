@@ -1,25 +1,25 @@
 import React from 'react';
 import Week from './week';
-import {Grid} from 'semantic-ui-react';
+import {Grid, Header} from 'semantic-ui-react';
 
-const Month = ({monthId, month, numberOfDays, offset, showDay}) => {
+const Month = ({monthId, month, numberOfDays, offset, showDay, projects}) => {
 
     const displayMonth = () => {
         const weekArray = ["1", "2", "3", "4", "5", "6"];
-        return weekArray.map(week => <Week key={`${monthId}-${week}`} monthId={monthId} week={week} numberOfDays={numberOfDays} offset={offset} showDay={showDay} />)
+        return weekArray.map(week => <Week key={`${monthId}-${week}`} monthId={monthId} week={week} numberOfDays={numberOfDays} offset={offset} showDay={showDay} projects={projects}/>)
     }
 
     const displayHeaders = () => {
         const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        return dayArray.map(day => <Grid.Column key={`${monthId}-${day}`} width={2}>{day}</Grid.Column>)
+        return dayArray.map(day => <Grid.Column key={`${monthId}-${day}`} >{day}</Grid.Column>)
     }
 
     return (
-        <Grid celled textAlign='center'>
-            <Grid.Row>
-                <h4>{month}</h4>
+        <Grid celled columns='equal'>
+            <Grid.Row centered color="teal">
+                <Header as='h2'>{month}</Header>
             </Grid.Row>
-            <Grid.Row>
+            <Grid.Row textAlign="center">
                 {displayHeaders()}
             </Grid.Row>
             {displayMonth()}

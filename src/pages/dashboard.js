@@ -144,7 +144,6 @@ const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, use
                 <Planner planner={planner} visible={visible} plannerDay={day} note={currentNote} setCurrentNote={setCurrentNote} addNote={addNote} projects={projects} />
                 <Sidebar.Pusher dimmed={dimmed && visible}>
                     <Grid columns={2}>
-                        <Grid.Row stretched>
 
                             <Grid.Column width={12}>
                                 
@@ -159,7 +158,7 @@ const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, use
                                                             </Segment>
                                                             <GoalButton handleClick={handleGoalModalOpen} />
                                                             <ProjectButton handleClick={handleProjModalOpen}/>
-                                                            <GoalModal user={user} handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal}/>
+                                                            <GoalModal user={user} handleClose={handleGoalModalClose} modalOpen={goalModalOpen} addGoal={addGoal} />
                                                             <ProjectModal user={user} handleClose={handleProjModalClose} modalOpen={projModalOpen} addProject={addProject} />
                                                             {Object.keys(currentGoal).length === 0 || <EditGoalModal user={user} handleClose={handleEditGoalModalClose} modalOpen={editGoalModalOpen} currentGoal={currentGoal} updateGoal={updateGoal}/>}
                                                             {Object.keys(currentProject).length === 0 || <EditProjectModal user={user} handleClose={handleEditProjModalClose} modalOpen={editProjModalOpen} currentProject={currentProject} updateProject={updateProject}/>}
@@ -168,19 +167,18 @@ const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, use
                                             </Item.Group>
                                         </Grid.Row>
 
-                                        <Calendar showDay={handlePlanner} />
+                                        <Calendar showDay={handlePlanner} projects={projects}/>
                                     </Segment>
                                 </Container>
 
                             </Grid.Column>
 
                             <Grid.Column width={4}>
-                                <Segment>
+                                <Segment basic>
                                     <ProgressContainer goals={goals} projects={projects} removeGoal={removeGoal} removeProject={removeProject} handleProjClick={handleProjModalOpen} handleGoalClick={handleGoalModalOpen} handleEditProjClick={handleEditProjModalOpen} handleEditGoalClick={handleEditGoalModalOpen} setCurrentGoal={setCurrentGoal} setCurrentProject={setCurrentProject}/>
                                 </Segment>
                             </Grid.Column>
 
-                        </Grid.Row>
                     </Grid>
                 </Sidebar.Pusher>
             </Sidebar.Pushable>

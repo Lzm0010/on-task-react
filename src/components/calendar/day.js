@@ -1,31 +1,31 @@
 import React from 'react';
 import CalTask from './calTask';
-import {Card, Grid, Feed} from 'semantic-ui-react'
+import {Segment, Grid, Feed} from 'semantic-ui-react'
 
 
-const Day = ({day, displayDay, showDay, dailyTasks}) => {
+const Day = ({day, displayDay, showDay, dailyTasks, projects}) => {
 
-    const handleClick = () => {
-        showDay(day)
+    const handleClick = (e) => {
+        showDay(day);
     };
 
     const displayTasks = () => {
-        return dailyTasks.map(task => <CalTask key={`ct-${task.id}`} task={task}/>)
+        return dailyTasks.map(task => <CalTask key={`ct-${task.id}`} task={task} projects={projects}/>)
     }
 
     return (
-        <Grid.Column width={2}>
+        <Grid.Column>
             {day ? (
-                <Card onClick={handleClick}>
-                    <Card.Content>
-                        <Card.Header>
+                <Segment basic onClick={handleClick}>
+                    <Feed>
+                        <Feed.Date>
                             {displayDay}
-                        </Card.Header>
-                        <Feed>
+                        </Feed.Date>
+                        <Feed.Extra>
                             {displayTasks()}
-                        </Feed>
-                    </Card.Content>
-                </Card>
+                        </Feed.Extra>
+                    </Feed>
+                </Segment>
             ) 
             : (
                 null
