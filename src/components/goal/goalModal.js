@@ -3,7 +3,7 @@ import {TasksContext} from '../../context/tasksContext';
 import {useInput} from '../../hooks/useInput';
 import {useSelect} from '../../hooks/useSelect';
 import DatePicker from 'react-datepicker';
-import {Form, Modal, Select, Button, Divider, Input} from 'semantic-ui-react';
+import {Form, Modal, Select, Button, Divider, Input, Grid, Segment} from 'semantic-ui-react';
 
 const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
     const tasksContext = useContext(TasksContext);
@@ -14,13 +14,24 @@ const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(null);
     const {value:goalTotalDays, bind:bindGoalTotalDays, reset:resetGoalTotalDays} = useInput("");
-    const {value:goalPercentage, bind:bindGoalPercentage, reset:resetGoalPercentage} = useInput("");
+    const {value:numerator, bind:bindNumerator, reset:resetNumerator} = useSelect("");
+    const {value:denominator, bind:bindDenominator, reset:resetDenominator} = useSelect("");
     const {value:frequency, bind:bindFrequency, reset:resetFrequency} = useSelect("");
 
     const typeOptions = [
         {key:'total', value:'total', text: 'Total'},
         {key:'percentage', value:'percentage', text: 'Percentage'},
     ];
+
+    const getNumOptionsForSelect = () => {
+        const nums = [...Array(366).keys()];
+        return nums.map(num => {
+            num += 1;
+            return {key: num, text: num, value: num};
+        })
+    };
+
+    const numOptions = getNumOptionsForSelect();
 
     const freqOptions = [
         {key:'daily', value:'daily', text: 'Daily'},
@@ -47,7 +58,7 @@ const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
                 start_date: startDate,
                 end_date: endDate,
                 goal_total_days: goalTotalDays,
-                goal_percentage: goalPercentage,
+                goal_percentage: numerator/denominator,
                 frequency,
                 user_id: user.id
             })
@@ -67,7 +78,8 @@ const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
         resetName();
         resetGoalType();
         resetGoalTotalDays();
-        resetGoalPercentage();
+        resetNumerator();
+        resetDenominator();
         resetFrequency();
         setStartDate(new Date());
         setEndDate(null);
@@ -131,21 +143,38 @@ const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
 
                     </Form.Group>
 
-                    <Form.Group widths="equal">
+                    <Form.Group>
 
-                        {(goalType === "total" ? <Form.Input required label="Total" placeholder="Total number of days you want to complete the goal.." {...bindGoalTotalDays} /> : null)}
-                        {(goalType === "percentage" ? <Form.Input required label="Percentage" placeholder="Percentage of days to complete over this time span.." {...bindGoalPercentage} /> : null)}
+                        {goalType === "total" ? <Form.Input required width={8} label="Total" placeholder="Total number of days you want to complete the goal.." {...bindGoalTotalDays} /> : null}
+                        {goalType === "percentage" ? (
+                            // <Form.Input required label="Percentage" placeholder="Percentage of days to complete over this time span.." {...bindGoalPercentage} /> 
+                            <Segment basic>
+                                <Grid columns={2} relaxed="very">
+                                    <Grid.Column>
+                                        <Form.Select label="Days" placeholder="# of Days to Complete.." options={numOptions} {...bindNumerator}/> 
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <Form.Select label="Total Days" placeholder="..These Many Days" options={numOptions} {...bindDenominator}/> 
+                                    </Grid.Column>
+                                </Grid>
+                                <Divider vertical>out of</Divider>
+                            </Segment>
+                            ) : null
+                        }
+                    </Form.Group>
+
+                    <Form.Group>
                         <Form.Field
                             control={Select}
                             label="Frequency"
                             placeholder="Select how often you want to accomplish this goal.." 
                             options={freqOptions}
                             required 
+                            width={8}
                             {...bindFrequency}
                         />
-
                     </Form.Group>
-
+                        
                     <Divider hidden/>
 
                     <Button type='submit'>Submit</Button>

@@ -51,6 +51,7 @@ export default function Login (props) {
                     />
                     <Form.Field
                         control={Input}
+                        type="password"
                         label="Password" 
                         placeholder="Enter password.."
                         required
