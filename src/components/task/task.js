@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useContext} from 'react';
+import React, {Fragment, useState, useContext, useEffect} from 'react';
 import {TasksContext} from '../../context/tasksContext';
 import {Checkbox, Button, Input} from 'semantic-ui-react';
 
@@ -8,6 +8,10 @@ const Task = ({task, projects}) => {
     const [name, setName] = useState(task.name);
     const [checked, setChecked] = useState(task.is_completed);
     const [editing, setEditing] = useState(task.name ? false : true);
+
+    useEffect(() => {
+        setChecked(task.is_completed)
+    }, [task])
 
     const editTask = (name, is_completed) => {
         const taskUrl = `http://localhost:3000/tasks/${task.id}`

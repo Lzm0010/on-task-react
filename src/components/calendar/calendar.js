@@ -4,7 +4,7 @@ import monthArray from '../../data/calendarData';
 import {Menu, Segment} from 'semantic-ui-react';
 
 
-const Calendar = ({showDay}) => {
+const Calendar = ({showDay, projects}) => {
     const [today] = useState(new Date());
     const getCurrentMonth = () => (monthArray[today.getMonth()]);
     const [activePage, setActivePage] = useState(getCurrentMonth().month);
@@ -13,7 +13,7 @@ const Calendar = ({showDay}) => {
     const displayCalendar = () => {
         const currentMonth = monthArray.find(month => month.month === activePage);
         const monthId = monthArray.findIndex(month => month.month === activePage) + 1;
-        return <Month month={currentMonth.month} monthId={monthId} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay}/> 
+        return <Month month={currentMonth.month} monthId={monthId} numberOfDays={currentMonth.numberOfDays} offset={currentMonth.offset} showDay={showDay} projects={projects}/> 
     }
 
     const displayMenuItems = () => (

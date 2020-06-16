@@ -30,7 +30,7 @@ const TaskFilter = () => {
 
     return (
         <Fragment>
-            <Header as="h2">
+            <Header as="h3">
                 Filter Tasks
             </Header>
             <Form>

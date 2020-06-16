@@ -3,7 +3,7 @@ import {TasksContext} from '../../context/tasksContext';
 import Day from './day';
 import {Grid} from 'semantic-ui-react';
 
-const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
+const Week = ({monthId, week, numberOfDays, offset, showDay, projects}) => {
 
     const tasksContext = useContext(TasksContext);
     const {filteredTasks} = tasksContext;
@@ -46,7 +46,7 @@ const Week = ({monthId, week, numberOfDays, offset, showDay}) => {
 
         const thisweek = dayArray.map(rawDay);
         if (thisweek.some(day => day !== undefined)){
-            return dayArray.map(day => <Day key={`${week}-${day}`} day={formattedDay(day)} displayDay={rawDay(day)} showDay={showDay} dailyTasks={dailyTasks(day)}/>)
+            return dayArray.map(day => <Day key={`${week}-${day}`} day={formattedDay(day)} displayDay={rawDay(day)} showDay={showDay} dailyTasks={dailyTasks(day)} projects={projects}/>)
         }
     
     }
