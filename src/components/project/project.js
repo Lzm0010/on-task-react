@@ -61,7 +61,7 @@ const Project = ({project, removeProject, handleEditProjClick, setCurrentProject
                     {formatDate(project.start_date)} - {formatDate(project.end_date)}
                 </Card.Meta>
                 <Card.Description>
-                <Progress value={progress} total={total} progress='ratio' warning/>
+                <Progress value={progress} total={total} progress='ratio' color="olive"/>
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>

@@ -8,15 +8,20 @@ export const TasksProvider = props => {
     const {
         tasks: initialTasks,
         dayTasks: initialDayTasks,
+        tasksUpToDay: initialTasksUpToDay,
         tasksCompleted: initialTasksCompleted,
+        tasksCompletedUpToDay: initialTasksCompletedUpToDay,
         filteredTasks: initialFilteredTasks,
         children
     } = props;
 
     //state to keep the values
+    const [today] = useState(new Date());
     const [tasks, setTasks] = useState(initialTasks);
     const [dayTasks, setDayTasks] = useState(initialDayTasks);
     const [tasksCompleted, setTasksCompleted] = useState(initialTasksCompleted);
+    const [tasksUpToDay, setTasksUpToDay] = useState(initialTasksUpToDay);
+    const [tasksCompletedUpToDay, setTasksCompletedUpToDay] = useState(initialTasksCompletedUpToDay);
     const [filteredTasks, setFilteredTasks] = useState(initialFilteredTasks);
     
     //============== TASK FUNCTIONS ===================//
@@ -35,6 +40,7 @@ export const TasksProvider = props => {
                 setTasks(tasks);
                 setFilteredTasks(tasks);
                 getTasksCompleted(tasks);
+                getTasksUpToDay(tasks);
             })
     }
 
@@ -42,6 +48,15 @@ export const TasksProvider = props => {
         setTasks(tasks => [...tasks, task])
         setFilteredTasks(tasks => [...tasks, task])
         setDayTasks(tasks => [...tasks, task])
+    }
+
+    const getTasksUpToDay = (tasks) => {
+        //if day is in the past current day
+        //get tasks completed / total tasks up to current day
+        const totalTasks = tasks.filter(task => (new Date(task.date)) <= today);
+        const completedTasks = totalTasks.filter(task => task.is_completed === true);
+        setTasksUpToDay(totalTasks);
+        setTasksCompletedUpToDay(completedTasks);
     }
 
     const getTasksByDay = (day) => {
@@ -95,6 +110,7 @@ export const TasksProvider = props => {
         setTasks(updatedTasks);
         setFilteredTasks(updatedTasks);
         getTasksCompleted(updatedTasks);
+        getTasksUpToDay(updatedTasks);
     }
 
     const updateAllTasks = (tasksToUpdate) => {
@@ -111,6 +127,8 @@ export const TasksProvider = props => {
     //make the context object
     const tasksContext = {
         tasksCompleted,
+        tasksUpToDay,
+        tasksCompletedUpToDay,
         getTasks,
         dayTasks,
         setDayTasks,
@@ -132,6 +150,8 @@ TasksProvider.propTypes = {
     tasks: PropTypes.array,
     dayTasks: PropTypes.array,
     tasksCompleted: PropTypes.array,
+    tasksUpToDay: PropTypes.array,
+    tasksCompletedUpToDay: PropTypes.array,
     filteredTasks: PropTypes.array
 };
 
@@ -139,5 +159,7 @@ TasksProvider.defaultProps = {
     tasks: [],
     dayTasks: [],
     tasksCompleted: [],
+    tasksUpToDay: [],
+    tasksCompletedUpToDay: [],
     filteredTasks: []
 };

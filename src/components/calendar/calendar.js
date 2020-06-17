@@ -27,8 +27,8 @@ const Calendar = ({showDay, projects}) => {
     return (
         <Fragment>
             {displayCalendar()}
-            <Segment style={{textAlign: "center"}}>
-                <Menu color="teal" widths={12}>
+            <Segment style={{textAlign: "center"}} inverted color="teal">
+                <Menu inverted color="olive" widths={12}>
                     {displayMenuItems()}
                 </Menu>    
             </Segment>

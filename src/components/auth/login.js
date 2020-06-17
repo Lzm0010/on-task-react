@@ -39,7 +39,7 @@ export default function Login (props) {
     }
 
     return (
-        <Card>
+        <Card raised color="teal">
             <Card.Content textAlign="center">
                 <Form onSubmit={handleSubmit}>
                     <Form.Field
