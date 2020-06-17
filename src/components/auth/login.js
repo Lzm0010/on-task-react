@@ -30,6 +30,11 @@ export default function Login (props) {
                     props.handleLogin(user.user, user.planner)
                     getTasks();
                 })
+                .catch(err => {
+                    if (err.response.status === 401){
+                        console.log("something wong")
+                    }
+                })
     }
     
     const handleSubmit = (e) => {
