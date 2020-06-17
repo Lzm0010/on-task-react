@@ -4,8 +4,9 @@ import {useHistory} from 'react-router-dom';
 import {useInput} from '../../hooks/useInput';
 import {Button, Form, Card, Input} from 'semantic-ui-react';
 
-export default function Login (props) {
+const Login = (props) => {
     const history = useHistory()
+
     const tasksContext = useContext(TasksContext);
     const {getTasks} = tasksContext;
 
@@ -24,16 +25,19 @@ export default function Login (props) {
         }
 
         return fetch(loginUrl, postObj)
-                .then(res => res.json())
+                .then(res => {
+                    if(res.status !== 200){
+                        throw new Error(res.status)
+                    }
+                    return res.json()
+                })
                 .then(user => {
                     localStorage.setItem('token', user.jwt)
                     props.handleLogin(user.user, user.planner)
                     getTasks();
                 })
                 .catch(err => {
-                    if (err.response.status === 401){
-                        console.log("something wong")
-                    }
+                    console.log(err)
                 })
     }
     
@@ -49,15 +53,17 @@ export default function Login (props) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Field
                         control={Input}
-                        label="Username" 
+                        label="Username"
+                        name="username" 
                         placeholder="Enter a username.."
-                        required 
+                        required
                         {...bindUsername}
                     />
                     <Form.Field
                         control={Input}
                         type="password"
-                        label="Password" 
+                        label="Password"
+                        name="password" 
                         placeholder="Enter password.."
                         required
                         {...bindPassword}
@@ -72,3 +78,5 @@ export default function Login (props) {
 
     );
 }
+
+export default Login;
