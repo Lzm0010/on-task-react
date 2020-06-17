@@ -4,13 +4,27 @@ import {Card, List, Confirm, Progress} from 'semantic-ui-react';
 
 const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate}) => {
     const tasksContext = useContext(TasksContext);
-    const {removeTask, tasksCompleted} = tasksContext;
+    const {removeTask, tasksCompleted, tasksCompletedUpToDay, tasksUpToDay} = tasksContext;
+    const filteredCompletedTasks = tasksCompletedUpToDay.filter(task => task.goal_id === goal.id).length;
+    const filteredTotalTasks = tasksUpToDay.filter(task => task.goal_id === goal.id).length;
+    const goalPercentage = filteredCompletedTasks/filteredTotalTasks * 100;
     const [open, setOpen] = useState(false);
     const [progress, setProgress] = useState(tasksCompleted.filter(task => task.goal_id === goal.id).length);
+    const [percentage, setPercentage] = useState(goalPercentage);
+    const [color, setColor] = useState("grey");
 
     useEffect(() => {
         setProgress(tasksCompleted.filter(task => task.goal_id === goal.id).length)
     }, [tasksCompleted, goal.id])
+
+    useEffect(() => {
+        setPercentage(goalPercentage)
+        if (goalPercentage >= (goal.goal_percentage * 100)){
+            setColor("olive");
+        } else {
+            setColor("red");
+        }
+    }, [goalPercentage, goal.goal_percentage])
 
     const deleteGoal = () => {
         goal.tasks.forEach(task => {
@@ -47,15 +61,6 @@ const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate
         handleEditGoalClick();
     }
 
-    // t.string "name"
-    // t.datetime "start_date"
-    // t.datetime "end_date"
-    // t.string "goal_type"
-    // t.integer "goal_total_days"
-    // t.float "goal_percentage"
-    // t.bigint "user_id", null: false
-    // t.string "frequency"
-
     return (
         <Card>
             <Card.Content>
@@ -67,14 +72,15 @@ const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate
                 </Card.Meta>
                 <Card.Description>
                     {goal.goal_type === "total" ? (
-                        <Progress value={progress} total={goal.tasks.length} progress='ratio' warning/>
+                        <Progress value={progress} total={goal.tasks.length} progress='ratio' color="olive"/>
                     ) : (
-                        <Progress percent={goal.percentage} progress warning/>
+                        <Progress percent={percentage} progress color={color}/>
                     )}
                 </Card.Description>
                 <Card.Description>
                     {goal.frequency}
                 </Card.Description>
+                {goal.goal_percentage ? <Card.Description>Goal Percentage: {parseFloat(goal.goal_percentage * 100).toFixed(2)}%</Card.Description> : null}
             </Card.Content>
             <Card.Content extra>
                 <List celled horizontal size="mini" floated="right">

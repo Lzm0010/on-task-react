@@ -16,10 +16,12 @@ const Month = ({monthId, month, numberOfDays, offset, showDay, projects}) => {
 
     return (
         <Grid celled columns='equal'>
-            <Grid.Row centered color="teal">
-                <Header as='h2'>{month}</Header>
+            <Grid.Row color="teal" textAlign="center">
+                <Grid.Column>
+                    <Header as='h2'>{month}</Header>
+                </Grid.Column>
             </Grid.Row>
-            <Grid.Row textAlign="center">
+            <Grid.Row textAlign="center" color="olive">
                 {displayHeaders()}
             </Grid.Row>
             {displayMonth()}
