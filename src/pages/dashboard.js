@@ -57,7 +57,7 @@ const Dashboard = ({notes, setNotes, goals, setGoals, projects, setProjects, use
     
         if (noteId){
             noteId = noteId.id
-            const noteUrl = `http://localhost:3000/notes/${noteId}`;
+            const noteUrl = `https://thawing-retreat-85272.herokuapp.com/notes/${noteId}`;
             fetch(noteUrl)
             .then(res => res.json())
             .then(note => setCurrentNote(note));

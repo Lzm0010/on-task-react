@@ -15,7 +15,7 @@ export default function Signup (props) {
     const {value:passwordConfirm, bind:bindPasswordConfirm} = useInput("");
 
     const signup = (user) => {
-        const signupUrl = "http://localhost:3000/users";
+        const signupUrl = "https://thawing-retreat-85272.herokuapp.com/users";
         const postObj = {
             'method': 'POST',
             'headers': {

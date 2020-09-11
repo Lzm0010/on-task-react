@@ -6,7 +6,7 @@ import {Divider, Icon, Header, Sidebar, Segment} from 'semantic-ui-react';
 const Planner = ({planner, visible, plannerDay, note, addNote, setCurrentNote, projects}) => {
     
     const newNote = (content) => {
-        const notesUrl = "http://localhost:3000/notes"
+        const notesUrl = "https://thawing-retreat-85272.herokuapp.com/notes"
         const token = localStorage.getItem('token')
         const noteObj = {
             'method': 'POST',
@@ -26,7 +26,7 @@ const Planner = ({planner, visible, plannerDay, note, addNote, setCurrentNote, p
     }
     
     const editNote = (noteId, content) => {
-        const noteUrl = `http://localhost:3000/notes/${noteId}`//edit and delete
+        const noteUrl = `https://thawing-retreat-85272.herokuapp.com/notes/${noteId}`//edit and delete
         const token = localStorage.getItem('token')
         const noteObj = {
             'method': 'PATCH',

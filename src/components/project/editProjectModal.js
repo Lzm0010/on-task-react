@@ -15,7 +15,7 @@ const EditProjectModal = ({user, modalOpen, handleClose, currentProject, updateP
     const [projectTasks, setProjectTasks] = useState(currentProject.tasks);
 
     const editProject = () => {
-        const projectUrl = `http://localhost:3000/projects/${currentProject.id}`;
+        const projectUrl = `https://thawing-retreat-85272.herokuapp.com/projects/${currentProject.id}`;
         const token = localStorage.getItem('token')
         const projObj = {
             'method': 'PATCH',

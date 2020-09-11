@@ -8,7 +8,7 @@ const CalTask = ({task, projects}) => {
     const [checked, setChecked] = useState(task.is_completed);
 
     const editTask = (is_completed) => {
-        const taskUrl = `http://localhost:3000/tasks/${task.id}`
+        const taskUrl = `https://thawing-retreat-85272.herokuapp.com/tasks/${task.id}`
         const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'PATCH',

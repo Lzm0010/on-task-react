@@ -43,7 +43,7 @@ const GoalModal = ({user, modalOpen, handleClose, addGoal}) => {
     ];
 
     const newGoal = () => {
-        const goalUrl = `http://localhost:3000/goals`;
+        const goalUrl = `https://thawing-retreat-85272.herokuapp.com/goals`;
         const token = localStorage.getItem('token')
         const goalObj = {
             'method': 'POST',

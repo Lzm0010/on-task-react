@@ -7,7 +7,7 @@ const TaskButton = ({planner, plannerDay}) => {
     const {addTask} = tasksContext;
     
     const newTask = () => {
-        const taskUrl = `http://localhost:3000/tasks`;
+        const taskUrl = `https://thawing-retreat-85272.herokuapp.com/tasks`;
         const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'POST',

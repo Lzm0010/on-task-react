@@ -20,7 +20,7 @@ const ProjectTasksContainer = ({projectTasks, setProjectTasks}) => {
     }
 
     const deleteTask = (task) => {
-        const taskUrl = `http://localhost:3000/tasks/${task.id}`
+        const taskUrl = `https://thawing-retreat-85272.herokuapp.com/tasks/${task.id}`
         const token = localStorage.getItem('token')
         const taskObj = {
             'method': 'DELETE',

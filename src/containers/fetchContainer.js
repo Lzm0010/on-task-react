@@ -18,21 +18,21 @@ const FetchContainer = (props) => {
         }
 
         const getNotes = () => {
-            const notesUrl = `http://localhost:3000/notes`;
+            const notesUrl = `https://thawing-retreat-85272.herokuapp.com/notes`;
             fetch(notesUrl, getObj)
                 .then(res => res.json())
                 .then(notes => setNotes(notes))
         }
     
         const getGoals = () => {
-            const goalsUrl = `http://localhost:3000/goals`;
+            const goalsUrl = `https://thawing-retreat-85272.herokuapp.com/goals`;
             fetch(goalsUrl, getObj)
                 .then(res => res.json())
                 .then(goals => setGoals(goals))
         }
     
         const getProjects = () => {
-            const projectsUrl = `http://localhost:3000/projects`;
+            const projectsUrl = `https://thawing-retreat-85272.herokuapp.com/projects`;
             fetch(projectsUrl, getObj)
                 .then(res => res.json())
                 .then(projects => setProjects(projects))

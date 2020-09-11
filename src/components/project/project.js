@@ -19,7 +19,7 @@ const Project = ({project, removeProject, handleEditProjClick, setCurrentProject
             removeTask(task)
         });
     
-        const projectUrl = `http://localhost:3000/projects/${project.id}`
+        const projectUrl = `https://thawing-retreat-85272.herokuapp.com/projects/${project.id}`
         const token = localStorage.getItem('token')
         const projectObj = {
             'method': 'DELETE',

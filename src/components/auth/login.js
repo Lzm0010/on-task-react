@@ -14,7 +14,7 @@ const Login = (props) => {
     const {value:password, bind:bindPassword} = useInput("");
 
     const login = (user) => {
-        const loginUrl = "http://localhost:3000/login";
+        const loginUrl = "https://thawing-retreat-85272.herokuapp.com/login";
         const postObj = {
             'method': 'POST',
             'headers': {

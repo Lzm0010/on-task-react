@@ -31,7 +31,7 @@ const Goal = ({goal, removeGoal, handleEditGoalClick, setCurrentGoal, formatDate
             removeTask(task)
         });
 
-        const goalUrl = `http://localhost:3000/goals/${goal.id}`
+        const goalUrl = `https://thawing-retreat-85272.herokuapp.com/goals/${goal.id}`
         const token = localStorage.getItem('token')
         const goalObj = {
             'method': 'DELETE',

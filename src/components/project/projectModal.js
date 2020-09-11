@@ -16,7 +16,7 @@ const ProjectModal = ({user, modalOpen, handleClose, addProject}) => {
     const [projectTasks, setProjectTasks] = useState([{name:null, step_number: 1, status: "active", is_completed: false, date: null}]);
 
     const newProject = () => {
-        const projectUrl = `http://localhost:3000/projects`;
+        const projectUrl = `https://thawing-retreat-85272.herokuapp.com/projects`;
         const token = localStorage.getItem('token')
         const projObj = {
             'method': 'POST',

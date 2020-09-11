@@ -33,7 +33,7 @@ export const TasksProvider = props => {
                 'Authorization': `Bearer ${token}`
             }
         }
-        const tasksUrl = `http://localhost:3000/tasks`;
+        const tasksUrl = `https://thawing-retreat-85272.herokuapp.com/tasks`;
         fetch(tasksUrl, getObj)
             .then(res => res.json())
             .then(tasks => {
